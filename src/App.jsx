@@ -7,9 +7,11 @@ import Services from "./components/services/Services.jsx";
 import Projects from "./components/projects/Projects.jsx";
 import About from "./components/about/About.jsx";
 import Contact from "./components/contact/Contact.jsx";
+import Cursor from "./components/cursor/Cursor.jsx";
 
 const App = () => {
   return <div>
+    <Cursor />
     <section id="Homepage">
       {/* <Sidebar /> */}
       <Navbar />
@@ -27,9 +29,8 @@ const App = () => {
     <section id="Projects">
       <Parallax type="projects" />
     </section>
-    <section>
       <Projects />
-    </section>
+  
 
     <section id="About">
       <Parallax type="about" />
@@ -44,7 +45,6 @@ const App = () => {
     <section>
       <Contact />
     </section>
-
   </div>;
 };
 

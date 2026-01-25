@@ -32,21 +32,12 @@ const Services = () =>  {
         initial="initial" 
         // animate="animate"
         // whileInView="animate" 
-        // viewport={{ 
-        //     once: true, 
-        //     amount: 0.5 
-        //     }} 
-        // transition={{ 
-        //     type: "spring", 
-        //     stiffness: 50, 
-        //     delay: 0.3 
-        //     }}
         ref={ref}
         animate={isInView && "animate"}    
     >
       <motion.div className="textContainer" variants={variants}>
             <p>
-                We offer a wide range of services 
+                I focus on offering a wide range of services 
                 with the best quality<br />to meet your needs.
             </p>
             <hr />

@@ -31,3 +31,21 @@ section{
     // font-weight: bold;
     // border-bottom: 2px solid #000;
 }
+
+@mixin mobile {
+    @media (max-width: 738px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (max-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (max-width: 1366px) {
+        @content;
+    }
+}
