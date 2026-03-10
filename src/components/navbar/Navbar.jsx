@@ -1,27 +1,121 @@
-import "./Navbar.scss";
-import { motion } from "framer-motion";
-import Sidebar from "../sidebar/Sidebar";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-scroll';
+import './Navbar.scss';
 
+// Importez vos logos ici (ajustez les chemins selon votre structure)
+// import logo1 from '../assets/Logo 1.png'; 
 
 const Navbar = () => {
-  return <div className="navbar">
-    {/* sidebar */}
-    <div className="wrapper">
-        <motion.span 
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          ZIEM David
-        </motion.span>
-        <div className="social">
-            <a href="#"><img src="/public/linkedin.png" alt=""/></a>
-            <a href="#"><img src="/public/github.png" alt=""/></a>
-            <a href="#"><img src="/public/instagram.png" alt=""/></a>
-            <a href="#"><img src="/public/gitlab.png" alt=""/></a>
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Gestion du changement de style au scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'Présentation', to: 'about' },
+    { name: 'Services', to: 'services' },
+    { name: 'Écosystème', to: 'ecosystem' },
+    { name: 'Actualités', to: 'news' },
+    { name: 'Carrières', to: 'careers' },
+  ];
+
+  return (
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-container">
+        {/* LOGO SECTION */}
+        <div className="logo-area">
+          <img src="/public/Logo 1.png" alt="IAC Logo" className="main-logo" />
+          <div className="logo-text">
+            <span className="brand-name">IAC</span>
+            <span className="brand-sub">Intelligence Artificielle Cameroun</span>
+          </div>
         </div>
-    </div>
-  </div>
+
+        {/* DESKTOP MENU */}
+        <ul className="nav-menu">
+          {navLinks.map((link) => (
+            <li key={link.name} className="nav-item">
+              <Link 
+                to={link.to}
+                smooth={true}
+                duration={500}
+                spy={true}
+                activeClass="active"
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+          <li className="nav-item">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-membership"
+            >
+              <Link to="membership" smooth={true} duration={500}>
+                Devenir Membre
+              </Link>
+            </motion.button>
+          </li>
+        </ul>
+
+        {/* MOBILE TOGGLE */}
+        <div 
+          className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`} 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      {/* MOBILE DRAWER */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'tween', duration: 0.4 }}
+            className="mobile-drawer"
+          >
+            <ul className="mobile-nav-links">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link 
+                    to={link.to}
+                    smooth={true}
+                    duration={500}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link 
+                  to="membership" 
+                  smooth={true} 
+                  duration={500}
+                  className="btn-membership-mobile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Devenir Membre
+                </Link>
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
 };
 
 export default Navbar;

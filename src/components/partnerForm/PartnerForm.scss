@@ -1,0 +1,75 @@
+// --- PARTNER SECTION ---
+@import '../../App.scss';
+
+.partner-section {
+  padding: 100px 5%;
+  background: $primary-color;
+  color: white;
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .partner-info {
+    flex: 1;
+    min-width: 300px;
+    h2 { font-size: 3rem; margin-bottom: 20px; }
+    .benefit-item {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+      .icon { font-size: 2rem; }
+      h4 { color: $accent-color; margin-bottom: 5px; }
+    }
+  }
+
+  .form-container {
+    flex: 1.2;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    color: $text-dark;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+
+    .iac-form {
+      h3 { color: $primary-color; margin-bottom: 30px; text-align: center; }
+      .form-group { margin-bottom: 20px; label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; } }
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        &:focus { border-color: $primary-color; outline: none; }
+      }
+      .form-row { display: flex; gap: 15px; margin-bottom: 15px; .form-group { flex: 1; } }
+      
+      .comite-box {
+        background: #f8f9ff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        h4 { font-size: 0.9rem; margin-bottom: 15px; color: $secondary-color; }
+      }
+
+      .btn-submit {
+        width: 100%;
+        background: $accent-color;
+        color: $primary-color;
+        border: none;
+        padding: 15px;
+        border-radius: 10px;
+        font-weight: 800;
+        cursor: pointer;
+        text-transform: uppercase;
+        &:hover { background: #00b8e6; }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .partner-section .container { flex-direction: column; }
+}

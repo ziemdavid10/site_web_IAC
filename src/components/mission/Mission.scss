@@ -1,0 +1,151 @@
+@use '../../App.scss' as *;
+@use 'sass:color';
+
+.vision-section {
+  @extend .section-padding; // Utilise la règle de padding définie dans App.scss
+  background: white;
+  position: relative;
+  overflow: hidden;
+
+  .vision-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    @include mobile {
+      flex-direction: column;
+      gap: 50px;
+    }
+  }
+
+  // --- PARTIE TEXTE ---
+  .vision-text {
+    flex: 1.2;
+
+    .tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba($accent-color, 0.1);
+      color: $primary-color;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      line-height: 1.2;
+      margin-bottom: 25px;
+      
+      @include mobile { font-size: 2.2rem; }
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: color.adjust($text-dark, $lightness: 20%);
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    .mission-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+
+      .mission-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+        background: $bg-light;
+        border-radius: 12px;
+        transition: $transition;
+        border: 1px solid transparent;
+
+        &:hover {
+          background: white;
+          border-color: rgba($accent-color, 0.3);
+          transform: translateX(10px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .check {
+          color: $accent-color;
+          font-weight: bold;
+          font-size: 1.2rem;
+          margin-top: -2px;
+        }
+
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: $text-dark;
+      }
+    }
+  }
+
+  // --- PARTIE VISUELLE (ANIMATION IA) ---
+  .vision-visual {
+    flex: 0.8;
+    @include flex-center;
+    position: sticky;
+    top: 150px;
+
+    @include mobile {
+      width: 100%;
+      position: static;
+      margin-top: 40px;
+    }
+
+    .ai-sphere {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, $primary-color 0%, color.adjust($primary-color, $lightness: -15%) 100%);
+      border-radius: 50%;
+      position: relative;
+      @include flex-center;
+      box-shadow: 0 0 60px rgba($primary-color, 0.3), 
+                  inset 0 0 30px rgba($accent-color, 0.2);
+
+      .core {
+        color: $accent-color;
+        font-size: 3rem;
+        font-weight: 900;
+        z-index: 2;
+        letter-spacing: 4px;
+        text-shadow: 0 0 15px rgba($accent-color, 0.6);
+      }
+
+      .orbit {
+        position: absolute;
+        width: 130%;
+        height: 130%;
+        border: 2px dashed rgba($accent-color, 0.3);
+        border-radius: 50%;
+        animation: rotateSphere 15s linear infinite;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: -8px;
+          width: 16px;
+          height: 16px;
+          background: $accent-color;
+          border-radius: 50%;
+          box-shadow: 0 0 15px $accent-color;
+        }
+      }
+    }
+  }
+}
+
+// Keyframes pour l'animation orbitale
+@keyframes rotateSphere {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

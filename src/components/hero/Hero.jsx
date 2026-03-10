@@ -1,80 +1,26 @@
-import React from 'react';
-import './Hero.scss';
-import { stagger } from 'framer-motion';
 import { motion } from 'framer-motion';
-
-const textVariants = {
-  initial: { 
-    opacity: 0, 
-    x: -500, 
-    },
-  animate: { 
-    opacity: 1, 
-    x: 0, 
-    transition: { 
-        duration: 0.5,
-        staggerChildren: 0.1
-     } 
-  },
-  scrollButton: {
-    opacity: 0, 
-    y: 10, 
-      transition: { 
-          duration: 0.5,
-          repeat: Infinity,
-        //   repeatType: "mirror",
-        //   ease: "easeInOut"
-       } 
-  }
-};
-
-const sliderVariants = {
-  initial: { 
-    x: 0, 
-    },
-  animate: {  
-    x: "-220%",
-    transition: { 
-        duration: 20,
-        repeat: Infinity,
-        repeatType: "mirror",
-        ease: "easeInOut"
-     } 
-  },
-};
+import './Hero.scss';
 
 const Hero = () => {
   return (
-    <div className="hero">
-        <div className="wrapper">
-            <motion.div 
-                className="hero-content" 
-                variants={textVariants}
-                initial="initial"
-                animate="animate"
-                >
-                <motion.h2 variants={textVariants}>ZIEM NGAM DAVID LOÏC</motion.h2>
-                <motion.h1 variants={textVariants}>AI, Data & Cloud Engineer</motion.h1>
-                <p>Your journey to excellence starts here.</p>
-                <motion.div variants={textVariants} className="hero-buttons">
-                    <motion.button variants={textVariants}>See the latest Works</motion.button>
-                    <motion.button variants={textVariants}>Contact Me</motion.button>
-                </motion.div>
-                <motion.img variants={textVariants} animate="scrollButton"  src="/public/scroll.png" alt="" />
-            </motion.div>
+    <section className="hero" id="home">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="hero-content"
+      >
+        <h1>Intelligence Artificielle Cameroun</h1>
+        <p>Promouvoir l'innovation technologique et l'éthique de l'IA pour le développement du Cameroun.</p>
+        <div className="hero-btns">
+          <button className="btn-primary">Nos Services</button>
+          <button className="btn-outline">Nous Découvrir</button>
         </div>
-        <motion.div 
-            className="hero-slidingText" 
-            variants={sliderVariants} 
-            initial="initial" 
-            animate="animate"
-            >
-            Jésus Rédempteur
-        </motion.div>
-        <div className="hero-image">
-            <img src="/public/mypic.jpg" alt="" />
-        </div>
-    </div>
+      </motion.div>
+      <div className="ai-background-animation">
+        {/* Ici, on pourrait intégrer un canvas Three.js ou des SVG animés */}
+      </div>
+    </section>
   );
 };
 

@@ -1,51 +1,161 @@
-html{
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-}
+// 1. VARIABLES & CONFIGURATION
+@use 'sass:color';
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "DM Sans", sans-serif;
-}
+$primary-color: #312783;
+$secondary-color: #4a3fc2;
+$accent-color: #00d2ff;
+$text-light: #ffffff;
+$text-dark: #1a1a1a;
+$bg-light: #f4f7fe;
+$bg-section-alt: #f8f9ff;
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-body{
-    background-color: #0c0c1d;
-    color:lightgray;
-}
+// Breakpoints
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 1024px;
 
-a{
-    text-decoration: none;
-    color: inherit;
-}
-
-
-section{
-    height: 100vh;
-    scroll-snap-align: center;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // font-size: 3rem;
-    // font-weight: bold;
-    // border-bottom: 2px solid #000;
-}
-
+// 2. MIXINS
 @mixin mobile {
-    @media (max-width: 738px) {
-        @content;
-    }
+  @media (max-width: $tablet) { @content; }
 }
 
-@mixin tablet {
-    @media (max-width: 1024px) {
-        @content;
-    }
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@mixin desktop {
-    @media (max-width: 1366px) {
-        @content;
-    }
+// 3. RESET & BASE
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background-color: $text-light;
+  color: $text-dark;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+// 4. TYPOGRAPHIE GLOBALE
+h1, h2, h3 {
+  font-weight: 800;
+  color: $primary-color;
+  
+  &:hover {
+    background: linear-gradient(to right, $primary-color 20%, $accent-color 40%, $accent-color 60%, $primary-color 80%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 2s linear infinite;
+  }
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: $primary-color;
+  box-shadow: 0 0 10px rgba($accent-color, 0.5); // Effet de lueur IA
+  transform-origin: 0%; // Très important : la barre grandit de gauche à droite
+  z-index: 2100; // Doit être au-dessus de la Navbar
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  position: relative;
+  
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: $accent-color;
+    margin: 15px auto 0;
+  }
+
+  @include mobile {
+    font-size: 1.8rem;
+  }
+}
+
+// 5. COMPOSANTS RÉUTILISABLES
+.section-padding {
+  padding: 100px 10%;
+  @include mobile { padding: 60px 5%; }
+}
+
+.bg-light-alt { background-color: $bg-section-alt; }
+
+// Barre de progression (Framer Motion ou JS)
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: $primary-color;
+  transform-origin: 0%;
+  z-index: 1001;
+}
+
+// Boutons
+.btn {
+  padding: 0.8rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+
+  &--primary {
+    background: $primary-color;
+    color: $text-light;
+    border: none;
+    &:hover { 
+      background: color.adjust($primary-color, $lightness: 10%); 
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba($primary-color, 0.2);
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: $primary-color;
+    border: 2px solid $primary-color;
+    &:hover { background: rgba($primary-color, 0.05); }
+  }
+}
+
+// 6. SCROLLBAR (Effet IA)
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: color.adjust($bg-light, $lightness: 2%);
+}
+::-webkit-scrollbar-thumb {
+  background: $primary-color;
+  border-radius: 10px;
+  &:hover { background: $secondary-color; }
+}
+
+// 7. ANIMATIONS
+@keyframes shine { 
+  to { background-position: 200% center; } 
+}
+
+main { width: 100%; }
