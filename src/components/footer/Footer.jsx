@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer__top">
         <div className="footer__brand">
-          <img src="/public/Logo 1.png" alt="IAC Logo" className="footer__logo" />
+          <img src="/Logo 1.png" alt="IAC Logo" className="footer__logo" />
           <p>
             Ambassadeurs de l'IA au Cameroun. Bâtir un écosystème éthique, 
             souverain et innovant pour le développement de l'Afrique.
