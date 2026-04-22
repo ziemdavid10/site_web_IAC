@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@use '../../App.scss' as *;
 
 .agenda {
   padding: 5rem 10%;

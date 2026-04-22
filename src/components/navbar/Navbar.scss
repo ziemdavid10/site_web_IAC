@@ -1,5 +1,4 @@
-// @use "../../App.scss" as *;
-
+@use 'sass:color';
 
 // Variables de design IA
 $primary-blue: #312783;
@@ -168,7 +167,7 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   right: 0;
   width: 300px;
   height: 100vh;
-  background: darken($primary-blue, 5%);
+  background: color.adjust($primary-blue, $lightness: -5%);
   z-index: 2050;
   padding: 120px 40px 40px;
   box-shadow: -10px 0 30px rgba(0,0,0,0.3);
