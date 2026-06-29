@@ -1,0 +1,103 @@
+@use '../../App.scss' as *;
+
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 48px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  backdrop-filter: blur(16px);
+  width: fit-content;
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: $accent-color;
+
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 1.1rem;
+    }
+  }
+
+  &__units {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  &__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+
+    // séparateur ":"
+    &:not(:last-child)::after {
+      content: ':';
+      position: absolute;
+      right: -4px;
+      top: 6px;
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 2.2rem;
+      font-weight: 200;
+      line-height: 1;
+    }
+
+    strong {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -2px;
+      // animation flash sur les secondes
+      transition: color 0.2s;
+    }
+
+    span {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.45);
+      margin-top: 8px;
+      font-weight: 600;
+    }
+  }
+
+  &__footer-note {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 28px 24px;
+
+    &__unit {
+      padding: 0 12px;
+
+      strong { font-size: 2rem; letter-spacing: -1px; }
+      span { font-size: 0.56rem; }
+
+      &:not(:last-child)::after { font-size: 1.6rem; top: 4px; }
+    }
+  }
+
+  @media (max-width: 380px) {
+    &__unit {
+      padding: 0 8px;
+      strong { font-size: 1.7rem; }
+    }
+  }
+}

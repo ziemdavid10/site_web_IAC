@@ -1,95 +1,4 @@
-// import './App.scss';
-// import React from 'react';
-// import { motion, useScroll, useSpring } from 'framer-motion';
-
-// // Importation des composants créés précédemment
-// import Navbar from './components/navbar/Navbar';
-// import Hero from './components/hero/Hero';
-// import Vision from './components/mission/Mission';
-// import Services from './components/service/Service';
-// import Ecosystem from './components/ecosystem/Ecosystem';
-// import Agenda from './components/agenda/Agenda';
-// import News from './components/news/News';
-// import Careers from './components/careers/Careers';
-// import Membership from './components/membership/Membership';
-// import PartnerForm from './components/partnerForm/PartnerForm';
-
-// // import Missions from './components/mission/Mission';
-// // import Opportunities from './components/opportunities/Opportunities';
-// import Footer from './components/footer/Footer';
-
-// const App = () => {
-//   // Barre de progression de lecture pour un aspect "Tech" pro
-//   const { scrollYProgress } = useScroll();
-//   const scaleX = useSpring(scrollYProgress, {
-//     stiffness: 100,
-//     damping: 30,
-//     restDelta: 0.001
-//   });
-
-//   return (
-//     <div className="app-wrapper">
-//       {/* Barre de progression subtile en haut de page */}
-//       <motion.div className="progress-bar" style={{ scaleX }} />
-
-//       <Navbar />
-
-//       <main>
-//         <section id="accueil">
-//           <Hero />
-//         </section>
-
-//         <section id="mission" className="section-padding">
-//           <Vision />
-//         </section>
-
-//         <section id="services" className="section-padding bg-light">
-//           <Services />
-//         </section>
-
-//         <section id="ecosystem" className="section-padding bg-light">
-//           <Ecosystem />
-//         </section>
-
-//         <section id="careers" className="section-padding">
-//           <Careers />
-//         </section>
-
-//         <section id="membership" className="section-padding">
-//           <Membership />
-//         </section>
-
-//         <section id="partner" className="section-padding">
-//           <PartnerForm />
-//         </section>
-
-//         <section id="news" className="section-padding">
-//           <News />
-//         </section>
-
-//         <section id="agenda" className="section-padding">
-//           <Agenda />
-//         </section>
-
-//       </main>
-
-//       <Hero />  
-//       <Ecosystem />
-//       <Agenda />
-//       <News />
-//       <Careers />
-//       <Membership />
-//       <PartnerForm />
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default App;
-
-
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Element } from 'react-scroll';
 import Navbar from './components/navbar/Navbar';
 import Hero from './components/hero/Hero';
@@ -105,72 +14,130 @@ import PartnerForm from './components/partnerForm/PartnerForm';
 import Partners from './components/partners/Partners';
 import Cursor from './components/cursor/Cursor';
 import Footer from './components/footer/Footer';
+import PhotoSlider from './components/parallax/PhotoSlider';
+import JciaPage from './pages/jcia/JciaPage';
 
 import './App.scss';
 
+const parallaxSections = [
+  {
+    images: [
+      '/Nouveau_média/brainstorming-iac.jpg.jpeg',
+      '/Nouveau_média/conference-ia.jpg.jpeg',
+      '/Nouveau_média/ia-etudiant.jpg.jpeg',
+    ],
+    tag: 'Innovation & Collaboration',
+    quote: "L'IA n'est pas une menace pour l'Afrique, c'est sa plus grande opportunité.",
+    author: 'Dr. Fred NGABA, Fondateur IAC',
+  },
+  {
+    images: [
+      '/Nouveau_média/gain-riyad.jpg.jpeg',
+      '/Nouveau_média/gain-riyad-2.jpg.jpeg',
+      '/Nouveau_média/journees-africaines-ie.jpg.jpeg',
+    ],
+    tag: 'Rayonnement International',
+    quote: "Le Cameroun prend sa place dans l'écosystème mondial de l'Intelligence Artificielle.",
+    author: 'Assemblée GAIN — Riyad, Arabie Saoudite',
+  },
+  {
+    images: [
+      '/Nouveau_média/conference-universite-catholique.jpg.jpeg',
+      '/Nouveau_média/iac-iric.jpg.jpeg',
+      '/Nouveau_média/iac-salem-hightech.jpg.jpeg',
+      '/Nouveau_média/ransome-bawack-asmac.jpg.jpeg',
+    ],
+    tag: 'Partage du Savoir',
+    quote: "Former, sensibiliser et accompagner : les trois piliers de notre mission nationale.",
+    author: 'Intelligence Artificielle Cameroun',
+  },
+  {
+    images: [
+      '/Nouveau_média/iac-union-europeenne.jpg.jpeg',
+      '/Nouveau_média/visite-pnud-iac.jpg.jpeg',
+      '/Nouveau_média/expertise-france-iac.jpg.jpeg',
+      '/Nouveau_média/iac-advanced-it.jpg.jpeg',
+    ],
+    tag: 'Partenariats Stratégiques',
+    quote: "Des alliances solides pour un développement technologique souverain et durable.",
+    author: 'IAC & Partenaires Internationaux',
+  },
+];
+
 function App() {
+  const [showJcia, setShowJcia] = useState(false);
+
+  useEffect(() => {
+    const handler = () => {
+      setShowJcia(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('openJcia', handler);
+    return () => window.removeEventListener('openJcia', handler);
+  }, []);
+
+  const handleBack = () => {
+    setShowJcia(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (showJcia) return <JciaPage onBack={handleBack} />;
   return (
     <div className="App">
       <ScrollProgress />
-      {/* Barre de navigation fixe */}
       <Navbar />
 
       <main>
-        {/* Section d'accueil / Hero */}
         <Element name="home">
           <Hero />
         </Element>
 
-        {/* Historique, Vision et Missions */}
         <Element name="about">
           <Vision />
         </Element>
 
-        {/* Services & Formations (Rapides, Intensives, Techniques) */}
+        <PhotoSlider {...parallaxSections[0]} />
+
         <Element name="services">
           <Services />
         </Element>
 
-        {/* Acteurs de l'IA (Alain Bomba, David Kenfack, etc.) */}
+        <PhotoSlider {...parallaxSections[1]} />
+
         <Element name="ecosystem">
           <Ecosystem />
         </Element>
 
-        {/* Calendrier 2024 et Événements */}
+        <PhotoSlider {...parallaxSections[2]} />
+
         <Element name="agenda">
           <Agenda />
         </Element>
 
-        {/* Visites officielles et Initiatives */}
         <Element name="news">
           <News />
         </Element>
 
-        {/* Offres de stages et Appels à projets */}
+        <PhotoSlider {...parallaxSections[3]} />
+
         <Element name="careers">
           <Careers />
         </Element>
 
-        {/* Adhésion (10 000 FCFA) */}
         <Element name="membership">
           <Membership />
         </Element>
 
-        {/* Formulaire Entreprise */}
         <Element name="partner">
           <PartnerForm />
         </Element>
 
-        {/* Section Partenaires */}
         <Element name="partners">
           <Partners />
         </Element>
       </main>
 
-      {/* Pied de page avec Logos partenaires */}
       <Footer />
-      
-      {/* Curseur personnalisé */}
       <Cursor />
     </div>
   );

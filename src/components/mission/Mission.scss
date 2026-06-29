@@ -2,28 +2,33 @@
 @use 'sass:color';
 
 .vision-section {
-  @extend .section-padding; // Utilise la règle de padding définie dans App.scss
+  @extend .section-padding;
   background: white;
   position: relative;
   overflow: hidden;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba($accent-color, 0.05), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
   .vision-container {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
     gap: 80px;
     max-width: 1400px;
     margin: 0 auto;
+    align-items: start;
 
-    @include mobile {
-      flex-direction: column;
-      gap: 50px;
-    }
+    @include mobile { grid-template-columns: 1fr; gap: 50px; }
   }
 
-  // --- PARTIE TEXTE ---
   .vision-text {
-    flex: 1.2;
-
     .tag {
       display: inline-block;
       padding: 6px 16px;
@@ -31,120 +36,221 @@
       color: $primary-color;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       margin-bottom: 20px;
     }
 
     h2 {
-      font-size: 2.8rem;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
       line-height: 1.2;
-      margin-bottom: 25px;
-      
-      @include mobile { font-size: 2.2rem; }
+      margin-bottom: 20px;
+      color: $primary-color;
+
+      &:hover { background: none; -webkit-text-fill-color: $primary-color; }
     }
 
-    p {
-      font-size: 1.1rem;
-      color: color.adjust($text-dark, $lightness: 20%);
+    > p {
+      font-size: 1.05rem;
+      color: #555;
+      line-height: 1.8;
       margin-bottom: 40px;
-      max-width: 600px;
+      max-width: 640px;
+    }
+  }
+
+  .key-facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 50px;
+    padding: 28px;
+    background: $bg-light;
+    border-radius: 20px;
+
+    @media (max-width: 768px) { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .key-fact {
+    text-align: center;
+    padding: 16px 8px;
+    border-right: 1px solid rgba($primary-color, 0.1);
+
+    &:last-child { border-right: none; }
+
+    strong {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: $primary-color;
+      margin-bottom: 4px;
     }
 
-    .mission-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+    .fact-label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 4px;
+    }
 
-      .mission-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        padding: 15px;
-        background: $bg-light;
-        border-radius: 12px;
-        transition: $transition;
-        border: 1px solid transparent;
+    .fact-sub {
+      display: block;
+      font-size: 0.78rem;
+      color: $accent-color;
+      font-weight: 600;
+    }
+  }
 
-        &:hover {
-          background: white;
-          border-color: rgba($accent-color, 0.3);
-          transform: translateX(10px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  .missions-title {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $primary-color;
+    margin-bottom: 20px;
+    font-weight: 700;
+
+    &:hover { background: none; -webkit-text-fill-color: $primary-color; }
+  }
+
+  .mission-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .mission-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    background: $bg-light;
+    border-radius: 12px;
+    transition: $transition;
+    border: 1px solid transparent;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: $text-dark;
+
+    &:hover {
+      background: white;
+      border-color: rgba($accent-color, 0.3);
+      transform: translateX(8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .mission-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+  }
+
+  .vision-visual {
+    position: sticky;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+
+    @include mobile { position: static; }
+  }
+
+  .ai-sphere {
+    width: 280px;
+    height: 280px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .core {
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, $primary-color, color.adjust($primary-color, $lightness: -15%));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 50px rgba($primary-color, 0.4), inset 0 0 20px rgba($accent-color, 0.2);
+      z-index: 2;
+
+      img { width: 80px; height: auto; 
+        // filter: brightness(0) invert(1); 
         }
+    }
 
-        .check {
-          color: $accent-color;
-          font-weight: bold;
-          font-size: 1.2rem;
-          margin-top: -2px;
+    .orbit {
+      position: absolute;
+      border-radius: 50%;
+      border: 1.5px dashed rgba($accent-color, 0.35);
+
+      &--inner {
+        width: 200px; height: 200px;
+        animation: rotateSphere 12s linear infinite;
+        &::before {
+          content: '';
+          position: absolute;
+          top: -7px; left: 50%;
+          width: 14px; height: 14px;
+          background: $accent-color;
+          border-radius: 50%;
+          box-shadow: 0 0 12px $accent-color;
         }
+      }
 
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: $text-dark;
+      &--outer {
+        width: 280px; height: 280px;
+        animation: rotateSphere 22s linear infinite reverse;
+        border-style: solid;
+        opacity: 0.3;
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: -5px; left: 50%;
+          width: 10px; height: 10px;
+          background: #a78bfa;
+          border-radius: 50%;
+          box-shadow: 0 0 10px #a78bfa;
+        }
       }
     }
   }
 
-  // --- PARTIE VISUELLE (ANIMATION IA) ---
-  .vision-visual {
-    flex: 0.8;
-    @include flex-center;
-    position: sticky;
-    top: 150px;
+  .vision-quote {
+    background: $primary-color;
+    border-radius: 20px;
+    padding: 28px;
+    color: white;
+    text-align: center;
+    position: relative;
 
-    @include mobile {
-      width: 100%;
-      position: static;
-      margin-top: 40px;
+    &::before {
+      content: '"';
+      position: absolute;
+      top: -10px; left: 20px;
+      font-size: 5rem;
+      color: $accent-color;
+      line-height: 1;
+      font-family: Georgia, serif;
     }
 
-    .ai-sphere {
-      width: 300px;
-      height: 300px;
-      background: radial-gradient(circle, $primary-color 0%, color.adjust($primary-color, $lightness: -15%) 100%);
-      border-radius: 50%;
-      position: relative;
-      @include flex-center;
-      box-shadow: 0 0 60px rgba($primary-color, 0.3), 
-                  inset 0 0 30px rgba($accent-color, 0.2);
+    blockquote {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      font-style: italic;
+      opacity: 0.9;
+      margin-bottom: 12px;
+    }
 
-      .core {
-        color: $accent-color;
-        font-size: 3rem;
-        font-weight: 900;
-        z-index: 2;
-        letter-spacing: 4px;
-        text-shadow: 0 0 15px rgba($accent-color, 0.6);
-      }
-
-      .orbit {
-        position: absolute;
-        width: 130%;
-        height: 130%;
-        border: 2px dashed rgba($accent-color, 0.3);
-        border-radius: 50%;
-        animation: rotateSphere 15s linear infinite;
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: -8px;
-          width: 16px;
-          height: 16px;
-          background: $accent-color;
-          border-radius: 50%;
-          box-shadow: 0 0 15px $accent-color;
-        }
-      }
+    cite {
+      font-size: 0.8rem;
+      color: $accent-color;
+      font-weight: 700;
+      font-style: normal;
     }
   }
 }
 
-// Keyframes pour l'animation orbitale
 @keyframes rotateSphere {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
