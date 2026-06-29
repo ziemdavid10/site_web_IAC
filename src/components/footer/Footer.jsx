@@ -26,16 +26,16 @@ const Footer = () => {
             Premier hub national dédié à l'Intelligence Artificielle au Cameroun.
             Membre du réseau mondial GAIN. Lauréat IAChallenge 2022 — Bordeaux.
           </p>
-          <div className="footer__badges">
+          {/* <div className="footer__badges">
             <span>🏆 IAChallenge 2022</span>
             <span>🌍 Membre GAIN</span>
             <span>🇨🇲 ONG Reconnue</span>
-          </div>
+          </div> */}
           <div className="social-links">
-            <a href="#" aria-label="Facebook"><FaFacebook /></a>
-            <a href="#" aria-label="Twitter/X"><FaXTwitter /></a>
-            <a href="#" aria-label="LinkedIn"><FaLinkedin /></a>
-            <a href="#" aria-label="YouTube"><FaYoutube /></a>
+            <a href="https://www.facebook.com/share/1ALEzaXhg8/?mibextid=wwXIfr" aria-label="Facebook"><FaFacebook /></a>
+            {/* <a href="#" aria-label="Twitter/X"><FaXTwitter /></a> */}
+            <a href="https://www.linkedin.com/company/iacameroun/" aria-label="LinkedIn"><FaLinkedin /></a>
+            {/* <a href="#" aria-label="YouTube"><FaYoutube /></a> */}
             <a href="mailto:contact@iacameroun.com" aria-label="Email"><FaEnvelope /></a>
           </div>
         </div>
@@ -53,7 +53,7 @@ const Footer = () => {
           <h4>Contactez-nous</h4>
           <div className="contact-item">
             <FaMapMarkerAlt className="icon" />
-            <span>Rue de l'aéroport, Immeuble Lucas Mill,<br />Cami-Toyota Coron, Yaoundé, Cameroun</span>
+            <span>Rue de l'aéroport, Immeuble Lucas Mill,<br />Face Cami-Toyota Coron, Yaoundé, Cameroun</span>
           </div>
           <div className="contact-item">
             <FaPhoneAlt className="icon" />

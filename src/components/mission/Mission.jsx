@@ -96,7 +96,7 @@ const Vision = () => (
           <blockquote>
             "L'IA n'est pas une menace pour l'Afrique, c'est sa plus grande opportunité."
           </blockquote>
-          <cite>— Dr. Fred NGABA, Fondateur IAC</cite>
+          <cite>— M. Boris Landry KOUEKAM, Fondateur IAC</cite>
         </div>
       </div>
     </div>

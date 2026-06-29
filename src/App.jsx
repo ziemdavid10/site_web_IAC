@@ -10,7 +10,7 @@ import Agenda from './components/agenda/Agenda';
 import News from './components/news/News';
 import Careers from './components/careers/Careers';
 import Membership from './components/membership/Membership';
-import PartnerForm from './components/partnerForm/PartnerForm';
+// import PartnerForm from './components/partnerForm/PartnerForm';
 import Partners from './components/partners/Partners';
 import Cursor from './components/cursor/Cursor';
 import Footer from './components/footer/Footer';
@@ -28,7 +28,7 @@ const parallaxSections = [
     ],
     tag: 'Innovation & Collaboration',
     quote: "L'IA n'est pas une menace pour l'Afrique, c'est sa plus grande opportunité.",
-    author: 'Dr. Fred NGABA, Fondateur IAC',
+    author: 'M. Boris Landry KOUEKAM, Fondateur IAC',
   },
   {
     images: [
@@ -128,9 +128,9 @@ function App() {
           <Membership />
         </Element>
 
-        <Element name="partner">
+        {/* <Element name="partner">
           <PartnerForm />
-        </Element>
+        </Element> */}
 
         <Element name="partners">
           <Partners />

@@ -40,7 +40,7 @@ const ecosystemData = [
     achievements: ['Invité ASMAC', 'Publications internationales', 'IA & Management'],
   },
   {
-    name: 'Dr. Fred NGABA',
+    name: 'M. Boris Landry KOUEKAM',
     solution: 'IAC',
     role: 'Fondateur & Directeur IAC',
     desc: 'Visionnaire et fondateur de l\'Intelligence Artificielle Cameroun. Interviewé par la CRTV, il porte la voix de l\'IA camerounaise sur la scène nationale et internationale, notamment au sein du réseau GAIN à Riyad.',
