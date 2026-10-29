@@ -29,13 +29,13 @@ jobs:
           npm run build
 
       # 4. Déployer le contenu de ./dist vers /htdocs via SFTP
-      - name: Deploy via SFTP
+      - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: sftp
-          port: 22
-          local-dir: ./dist/    # Dossier de sortie généré par Vite
-          server-dir: /htdocs/  # Reçoit le contenu web sur le serveur
+          protocol: ftps       # Utiliser 'ftps' au lieu de 'sftp'
+          port: 21             # Port standard pour FTPS
+          local-dir: ./dist/
+          server-dir: /htdocs/
