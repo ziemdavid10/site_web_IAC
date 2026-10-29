@@ -3,7 +3,7 @@ name: Deploy Vite React App to Network Solutions
 on:
   push:
     branches:
-      - main  # Si votre branche principale sur GitHub s'appelle 'master', remplacez 'main' par 'master'
+      - main  # Ou 'master' selon la branche principale de votre dépôt
 
 jobs:
   build-and-deploy:
@@ -11,31 +11,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Récupérer le code source du dépôt
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Installer Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      # 3. Installer les dépendances et builder avec Vite
       - name: Install dependencies and Build
         run: |
           npm ci
           npm run build
 
-      # 4. Déployer le contenu de ./dist vers /htdocs via SFTP
-      - name: Deploy via FTPS
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps       # Utiliser 'ftps' au lieu de 'sftp'
-          port: 21             # Port standard pour FTPS
+          protocol: ftp          # Passage en FTP classique
+          port: 21
+          security: loose        # Ignore les restrictions SSL du serveur
           local-dir: ./dist/
           server-dir: /htdocs/
