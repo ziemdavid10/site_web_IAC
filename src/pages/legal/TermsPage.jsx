@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import './LegalShared.scss';
-
+import {
+  LuBuilding2, LuCopyright, LuFilePen, LuFileText, LuGavel, LuLink, LuListChecks, LuLockOpen, LuScale,
+} from 'react-icons/lu';
+import LegalLayout from './LegalLayout';
 const sections = [
   {
     id: 'objet',
-    icon: 'description',
+    icon: LuFileText,
     title: 'Objet et champ d\'application',
     content: (
       <>
@@ -23,7 +23,7 @@ const sections = [
   },
   {
     id: 'editeur',
-    icon: 'corporate_fare',
+    icon: LuBuilding2,
     title: 'Éditeur du site',
     content: (
       <>
@@ -39,7 +39,7 @@ const sections = [
   },
   {
     id: 'acces',
-    icon: 'lock_open',
+    icon: LuLockOpen,
     title: 'Accès au site',
     content: (
       <>
@@ -57,7 +57,7 @@ const sections = [
   },
   {
     id: 'propriete',
-    icon: 'copyright',
+    icon: LuCopyright,
     title: 'Propriété intellectuelle',
     content: (
       <>
@@ -78,7 +78,7 @@ const sections = [
   },
   {
     id: 'utilisation',
-    icon: 'rule',
+    icon: LuListChecks,
     title: 'Utilisation acceptable',
     content: (
       <>
@@ -96,7 +96,7 @@ const sections = [
   },
   {
     id: 'responsabilite',
-    icon: 'balance',
+    icon: LuScale,
     title: 'Limitation de responsabilité',
     content: (
       <>
@@ -116,7 +116,7 @@ const sections = [
   },
   {
     id: 'liens',
-    icon: 'link',
+    icon: LuLink,
     title: 'Liens hypertextes',
     content: (
       <p>
@@ -129,7 +129,7 @@ const sections = [
   },
   {
     id: 'droit',
-    icon: 'gavel',
+    icon: LuGavel,
     title: 'Droit applicable et juridiction',
     content: (
       <>
@@ -147,7 +147,7 @@ const sections = [
   },
   {
     id: 'modifications',
-    icon: 'edit_note',
+    icon: LuFilePen,
     title: 'Modifications des CGU',
     content: (
       <p>
@@ -160,76 +160,14 @@ const sections = [
 ];
 
 const TermsPage = () => (
-  <div>
-    <section className="legal-hero">
-      <motion.div
-        className="legal-hero__content"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <span className="legal-hero__tag">
-          <span className="material-symbols-rounded">description</span>
-          Conditions d'utilisation
-        </span>
-        <h1>Conditions Générales d'Utilisation</h1>
-        <p>
-          Règles et conditions régissant l'accès et l'utilisation du site web
-          et des services numériques de l'Intelligence Artificielle Cameroun.
-        </p>
-        <div className="legal-hero__meta">
-          <span><span className="material-symbols-rounded">calendar_month</span> Dernière mise à jour : Janvier 2025</span>
-          <span><span className="material-symbols-rounded">gavel</span> Droit camerounais applicable</span>
-        </div>
-      </motion.div>
-    </section>
-
-    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <div className="legal-body">
-        <nav className="legal-toc">
-          <h3>Sommaire</h3>
-          <ol>
-            {sections.map((s) => (
-              <li key={s.id}><a href={`#${s.id}`}>{s.title}</a></li>
-            ))}
-          </ol>
-        </nav>
-
-        {sections.map((s, i) => (
-          <motion.div
-            key={s.id}
-            id={s.id}
-            className="legal-section"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <div className="legal-section__title">
-              <span className="material-symbols-rounded">{s.icon}</span>
-              <h2>{s.title}</h2>
-            </div>
-            {s.content}
-          </motion.div>
-        ))}
-      </div>
-    </div>
-
-    <nav className="legal-footer-nav">
-      <Link to="/confidentialite">
-        <span className="material-symbols-rounded">privacy_tip</span> Confidentialité
-      </Link>
-      <Link to="/politique-cookies">
-        <span className="material-symbols-rounded">cookie</span> Cookies
-      </Link>
-      <Link to="/remboursement">
-        <span className="material-symbols-rounded">payments</span> Remboursement
-      </Link>
-      <Link to="/">
-        <span className="material-symbols-rounded">home</span> Accueil
-      </Link>
-    </nav>
-  </div>
+  <LegalLayout
+    tag="Conditions d'utilisation"
+    tagIcon={LuFileText}
+    title="Conditions Générales d'Utilisation"
+    intro="Règles et conditions régissant l'accès et l'utilisation du site web et des services numériques de l'Intelligence Artificielle Cameroun."
+    meta={[{ icon: LuGavel, text: 'Droit camerounais applicable' }]}
+    sections={sections}
+  />
 );
 
 export default TermsPage;

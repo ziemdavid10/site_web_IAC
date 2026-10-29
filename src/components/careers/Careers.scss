@@ -1,5 +1,5 @@
 // --- CAREERS SECTION ---
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 @use 'sass:color';
 
 .careers-section {
@@ -192,5 +192,46 @@
 
       &:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba($primary-color, 0.25); }
     }
+  }
+}
+
+// Icônes react-icons (charte IAC)
+.value-card > svg { color: #312783; margin-bottom: 4px; }
+.offer-icon { display: flex; color: var(--offer-color, #312783); }
+.offer-details span,
+.rdv-info,
+.contact-info { display: inline-flex; align-items: center; gap: 6px; svg { color: #0891b2; flex-shrink: 0; } }
+.rdv-info, .contact-info { display: flex; }
+.req-check { display: inline-flex; svg { display: block; } }
+
+// Candidature spontanée
+.careers__spontaneous {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 24px;
+  margin: 48px auto 0;
+  max-width: 900px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px dashed rgba($primary-color, 0.3);
+  text-align: center;
+
+  p { font-size: 0.95rem; color: #4a4668; }
+
+  .btn-spontaneous {
+    min-height: 46px;
+    padding: 0 22px;
+    border-radius: 12px;
+    border: 1.5px solid $primary-color;
+    background: transparent;
+    color: $primary-color;
+    font-weight: 800;
+    cursor: pointer;
+    transition: $transition;
+    &:hover { background: $primary-color; color: #fff; }
+    @include focus-ring;
   }
 }

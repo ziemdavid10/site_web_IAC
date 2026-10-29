@@ -1,14 +1,28 @@
-@use "../../App.scss" as *;
+@use '../../styles/abstracts' as *;
 
 .cursor {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 1px solid white;
-    position: fixed;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-cursor;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px; // centre le halo sur la pointe de la souris
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  mix-blend-mode: difference; // visible sur fond clair comme sur fond sombre
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s, width 0.25s, height 0.25s, margin 0.25s, background 0.25s;
 
-    @include mobile{
-        display: none;
-    }
+  &.is-visible { opacity: 1; }
+
+  &.is-hovering {
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  @media print { display: none; }
 }

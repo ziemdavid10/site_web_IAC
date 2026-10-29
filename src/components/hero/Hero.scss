@@ -1,37 +1,37 @@
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 @use 'sass:color';
 
 .hero {
   position: relative;
-  min-height: 100vh;
-  margin-top: 0;
-  padding-top: 180px;
-
-  @media (max-width: 1100px) { padding-top: 172px; }
-  @media (max-width: 768px)  { padding-top: 140px; }
-  @media (max-width: 480px)  { padding-top: 125px; }
   width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  overflow: hidden;
-  background: #0d0a3e;
-  color: $text-light;
-  padding: 120px 8% 80px;
   gap: 60px;
+  overflow: hidden;
+  background: $dark-color;
+  color: $text-light;
+  // Côtés et bas ; le haut compense l'en-tête fixe (bandeau JCIA + navbar)
+  padding: 0 8% 80px;
+  @include below-header(48px);
 
-  @media (min-width: 1600px) {
-    padding: 120px 12% 80px;
-  }
+  @media (min-width: 1600px) { padding-left: 12%; padding-right: 12%; }
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
+    gap: 40px;
     text-align: center;
-    padding: 80px 6% 60px;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-bottom: 64px;
   }
 
   @media (max-width: 480px) {
-    padding: 60px 5% 40px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 48px;
   }
 
   &::before {
@@ -194,9 +194,7 @@
     letter-spacing: 1px;
     box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);
 
-    .material-symbols-rounded {
-      font-family: 'Material Symbols Rounded';
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    svg {
       font-size: 1.2rem;
     }
 

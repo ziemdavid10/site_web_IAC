@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import {
+  LuCamera as CameraIcon,
+  LuEarth as PublicIcon,
+  LuEuro as EuroIcon,
+  LuGlobe as GlobeIcon,
+  LuGraduationCap as GraduationIcon,
+  LuHandshake as HandshakeIcon,
+  LuNewspaper as NewsIcon,
+  LuTv as TvIcon,
+  LuX,
+} from 'react-icons/lu';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import cameraIcon from '../../assets/icons/photo.png';
-import newsIcon from '../../assets/icons/news.png';
-import handshakeIcon from '../../assets/icons/handshake.png';
-import globeIcon from '../../assets/icons/globe.png';
-import graduationIcon from '../../assets/icons/graduation.png';
-import tvIcon from '../../assets/icons/tv.png';
-import publicIcon from '../../assets/icons/public.png';
-import euroIcon from '../../assets/icons/euro.png';
 
 import './News.scss';
 
@@ -47,42 +50,42 @@ const categories = ['Tous', 'Médias', 'Événements', 'Partenariats', 'Académi
 
 const newsHighlights = [
   {
-    icon: tvIcon,
+    icon: TvIcon,
     title: 'Passage sur Canal 2 & CRTV',
     desc: 'Le Dr Fred NGABA et les membres de l\'IAC ont été interviewés par les grandes chaînes nationales pour présenter la vision de l\'IA au Cameroun.',
     date: '2024',
     category: 'Médias',
   },
   {
-    icon: globeIcon,
+    icon: GlobeIcon,
     title: 'Assemblée GAIN à Riyad',
     desc: 'L\'IAC représente le Cameroun à l\'Assemblée Générale du Global AI Network (GAIN) à Riyad, Arabie Saoudite, renforçant les liens avec l\'écosystème IA mondial.',
     date: '2024',
     category: 'International',
   },
   {
-    icon: euroIcon,
+    icon: EuroIcon,
     title: 'Partenariat avec l\'Union Européenne',
     desc: 'Signature d\'un accord de coopération avec l\'Union Européenne pour le développement de l\'IA éthique et responsable en Afrique centrale.',
     date: '2024',
     category: 'Partenariats',
   },
   {
-    icon: publicIcon,
+    icon: PublicIcon,
     title: 'Évaluation nationale IA',
     desc: 'Participation à la réunion d\'évaluation de la préparation du Cameroun à l\'adoption de l\'IA, en présence des ministères et institutions publiques.',
     date: '2024',
     category: 'Gouvernance',
   },
   {
-    icon: handshakeIcon,
+    icon: HandshakeIcon,
     title: 'Visite du PNUD',
     desc: 'Une délégation du Programme des Nations Unies pour le Développement visite les locaux de l\'IAC pour explorer des synergies sur l\'innovation locale.',
     date: '2024',
     category: 'Partenariats',
   },
   {
-    icon: graduationIcon,
+    icon: GraduationIcon,
     title: 'Conférences universitaires',
     desc: 'L\'IAC intervient dans les grandes universités camerounaises (Université de Douala, Université Catholique, IRIC) pour sensibiliser les étudiants à l\'IA.',
     date: '2024',
@@ -113,10 +116,10 @@ const News = () => {
 
         <div className="news-tabs">
           <button className={activeTab === 'gallery' ? 'active' : ''} onClick={() => setActiveTab('gallery')}>
-            <img src={cameraIcon} alt=""  width={17} height={17} /> Galerie Photo
+            <CameraIcon size={17} aria-hidden /> Galerie Photo
           </button>
           <button className={activeTab === 'highlights' ? 'active' : ''} onClick={() => setActiveTab('highlights')}>
-            <img src={newsIcon} alt="" width={17} height={17} /> Faits Marquants
+            <NewsIcon size={17} aria-hidden /> Faits Marquants
           </button>
         </div>
       </motion.div>
@@ -179,7 +182,7 @@ const News = () => {
                 transition={{ delay: i * 0.08 }}
                 whileHover={{ y: -5 }}
               >
-                <div className="news-card__icon"><img src={item.icon} alt="" width={40} height={40} /></div>
+                <div className="news-card__icon"><item.icon size={40} aria-hidden /></div>
                 <div className="news-content">
                   <span className="news-cat">{item.category}</span>
                   <h3>{item.title}</h3>
@@ -208,7 +211,7 @@ const News = () => {
               exit={{ scale: 0.8 }}
               onClick={e => e.stopPropagation()}
             >
-              <button className="lightbox__close" onClick={() => setLightbox(null)}>✕</button>
+              <button className="lightbox__close" onClick={() => setLightbox(null)} aria-label="Fermer"><LuX aria-hidden /></button>
               <img src={lightbox.img} alt={lightbox.title} />
               <div className="lightbox__info">
                 <span>{lightbox.category}</span>

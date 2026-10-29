@@ -1,4 +1,4 @@
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 
 .news-section {
   padding: 100px 8%;
@@ -262,3 +262,8 @@
     p { color: white; font-size: 0.95rem; font-weight: 500; }
   }
 }
+
+// Icônes react-icons (charte IAC)
+.news-card__icon { display: flex; color: #312783; }
+.news-tabs button { display: inline-flex; align-items: center; gap: 6px; }
+.lightbox__close { display: grid; place-items: center; }

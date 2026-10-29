@@ -37,23 +37,24 @@
 
     strong { color: #00d2ff; font-weight: 800; white-space: nowrap; }
 
-    span:last-child {
+    .jcia-banner__details {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      min-width: 0;
+
+      @media (max-width: 640px) { display: none; }
     }
 
-    .material-symbols-rounded {
-      font-family: 'Material Symbols Rounded';
+    .jcia-banner__icon {
       font-size: 1.1rem;
       color: #00d2ff;
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
       flex-shrink: 0;
     }
 
     @media (max-width: 900px) { font-size: 0.75rem; }
     @media (max-width: 768px) { font-size: 0.68rem; }
-    @media (max-width: 480px) { font-size: 0.6rem; }
+    @media (max-width: 480px) { display: none; }
   }
 
   &__countdown {
@@ -73,7 +74,7 @@
         font-size: 0.55rem;
         letter-spacing: 1.5px;
         gap: 4px;
-        .material-symbols-rounded { font-size: 0.85rem; }
+        svg { font-size: 0.85rem; }
       }
 
       &__units { gap: 0; }
@@ -128,6 +129,10 @@
   }
 
   &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
     background: #00d2ff;
     color: #312783;
     border: none;
@@ -140,6 +145,9 @@
     letter-spacing: 0.5px;
     white-space: nowrap;
     flex-shrink: 0;
+
+    svg { font-size: 1rem; }
+    &:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
     @media (max-width: 768px) { padding: 6px 12px; font-size: 0.68rem; }
     @media (max-width: 480px) { padding: 5px 8px;  font-size: 0.6rem;  }

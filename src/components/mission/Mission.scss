@@ -1,8 +1,8 @@
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 @use 'sass:color';
 
 .vision-section {
-  @extend .section-padding;
+  @include section-padding;
   background: white;
   position: relative;
   overflow: hidden;
@@ -258,3 +258,6 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+// Icônes react-icons (charte IAC)
+.mission-icon { display: inline-flex; color: #312783; svg { display: block; } }

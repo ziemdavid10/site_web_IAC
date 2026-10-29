@@ -1,206 +1,229 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import './LegalShared.scss';
+import {
+  LuCookie, LuInfo, LuLayers, LuListChecks, LuClock, LuSettings2, LuShare2, LuMail,
+  LuActivity, LuCircleCheck, LuCircleX, LuRotateCcw,
+} from 'react-icons/lu';
+import LegalLayout from './LegalLayout';
+import { useCookieConsent } from '../../context/cookieConsent';
+import { CATEGORIES, SERVICES } from '../../config/cookieConfig';
+import { ORG } from '../../config/site';
 
-const cookieTypes = [
-  {
-    name: 'Cookies essentiels',
-    icon: 'lock',
-    required: true,
-    color: '#312783',
-    desc: 'Indispensables au fonctionnement du site. Ils ne peuvent pas être désactivés.',
-    examples: ['Session utilisateur', 'Préférences de langue', 'Sécurité CSRF', 'Consentement cookies'],
-  },
-  {
-    name: 'Cookies analytiques',
-    icon: 'analytics',
-    required: false,
-    color: '#0891b2',
-    desc: 'Nous aident à comprendre comment les visiteurs interagissent avec notre site.',
-    examples: ['Pages visitées', 'Durée de visite', 'Source de trafic', 'Taux de rebond'],
-  },
-  {
-    name: 'Cookies fonctionnels',
-    icon: 'tune',
-    required: false,
-    color: '#7c3aed',
-    desc: 'Permettent de mémoriser vos préférences pour une meilleure expérience.',
-    examples: ['Préférences d\'affichage', 'Formulaires pré-remplis', 'Langue préférée'],
-  },
-  {
-    name: 'Cookies marketing',
-    icon: 'campaign',
-    required: false,
-    color: '#f59e0b',
-    desc: 'Utilisés pour vous proposer des contenus pertinents sur nos activités et événements.',
-    examples: ['Suivi des campagnes JCIA', 'Publicités ciblées', 'Réseaux sociaux'],
-  },
-];
+const formatDate = (iso) => {
+  try {
+    return new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+};
+
+// ── Statut du consentement, mis à jour en direct ────────────────────────────
+const ConsentStatus = () => {
+  const { consent, prefs, hasConsented, openPreferences, resetConsent } = useCookieConsent();
+
+  return (
+    <section className="consent-status" aria-labelledby="consent-status-title" aria-live="polite">
+      <div className="consent-status__head">
+        <h2 id="consent-status-title"><LuActivity aria-hidden /> Vos choix actuels</h2>
+        <small>
+          {hasConsented
+            ? `Enregistrés le ${formatDate(consent.ts)}`
+            : 'Aucun choix enregistré : seuls les cookies essentiels sont actifs.'}
+        </small>
+      </div>
+
+      <div className="consent-status__grid">
+        {CATEGORIES.map(({ key, label, icon: Icon, color }) => {
+          const on = Boolean(prefs[key]);
+          return (
+            <div key={key} className="consent-status__item" style={{ '--cat-color': color }}>
+              <Icon aria-hidden />
+              <strong>{label}</strong>
+              <span className={`consent-status__pill ${on ? 'is-on' : 'is-off'}`}>
+                {on ? <LuCircleCheck aria-hidden /> : <LuCircleX aria-hidden />}
+                {on ? 'Autorisés' : 'Refusés'}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="consent-status__actions">
+        <button type="button" className="legal-btn legal-btn--primary" onClick={openPreferences}>
+          <LuSettings2 aria-hidden /> Modifier mes préférences
+        </button>
+        {hasConsented && (
+          <button type="button" className="legal-btn legal-btn--outline" onClick={resetConsent}>
+            <LuRotateCcw aria-hidden /> Retirer mon consentement
+          </button>
+        )}
+      </div>
+
+      {hasConsented && (
+        <p className="consent-status__id">Référence de votre consentement : {consent.id}</p>
+      )}
+    </section>
+  );
+};
+
+const ManageButton = () => {
+  const { openPreferences } = useCookieConsent();
+  return (
+    <button type="button" className="legal-btn legal-btn--primary" onClick={openPreferences}>
+      <LuSettings2 aria-hidden /> Ouvrir le panneau de préférences
+    </button>
+  );
+};
+
+// ── Tableau généré depuis le registre (config/cookieConfig.js) ──────────────
+const CookieTable = () => {
+  const activeServices = SERVICES.filter((s) => s.enabled);
+  const labelOf = (key) => CATEGORIES.find((c) => c.key === key)?.label || key;
+
+  return (
+    <>
+      <p>
+        Ce tableau est généré automatiquement à partir de la configuration du site : il reflète en permanence
+        les cookies réellement susceptibles d'être déposés.
+      </p>
+      <table className="legal-table">
+        <thead>
+          <tr><th>Cookie</th><th>Service</th><th>Catégorie</th><th>Finalité</th><th>Durée</th></tr>
+        </thead>
+        <tbody>
+          {activeServices.flatMap((s) => s.cookies.map((c) => (
+            <tr key={`${s.id}-${c.name}`}>
+              <td data-label="Cookie"><code>{c.name}</code></td>
+              <td data-label="Service">{s.name}<br /><small>{s.provider}</small></td>
+              <td data-label="Catégorie">{labelOf(s.category)}</td>
+              <td data-label="Finalité">{s.purpose}</td>
+              <td data-label="Durée">{c.duration}</td>
+            </tr>
+          )))}
+        </tbody>
+      </table>
+      {activeServices.length === 1 && (
+        <div className="legal-highlight">
+          À ce jour, le site n'utilise <strong>aucun cookie de mesure d'audience, fonctionnel ou marketing</strong>.
+          Si un tel outil est ajouté, il apparaîtra ici et votre accord vous sera redemandé.
+        </div>
+      )}
+    </>
+  );
+};
 
 const sections = [
   {
     id: 'definition',
-    icon: 'help_outline',
-    title: 'Qu\'est-ce qu\'un cookie ?',
+    icon: LuInfo,
+    title: "Qu'est-ce qu'un cookie ?",
     content: (
       <>
         <p>
-          Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, tablette, smartphone)
-          lors de votre visite sur notre site. Il permet au site de mémoriser des informations sur votre
-          visite, comme votre langue préférée et d'autres paramètres.
+          Un cookie est un petit fichier texte déposé sur votre appareil (ordinateur, tablette, smartphone) lorsque
+          vous consultez un site. Il permet de mémoriser des informations sur votre visite, comme vos préférences,
+          ou de mesurer la fréquentation des pages.
         </p>
         <div className="legal-highlight">
-          Les cookies ne contiennent pas de virus et ne peuvent pas endommager votre appareil.
-          Ils sont essentiels au bon fonctionnement de nombreux services en ligne.
+          Les cookies non essentiels ne sont jamais déposés avant votre accord. Refuser est aussi simple qu'accepter :
+          un seul clic, sans incidence sur l'accès au site.
         </div>
       </>
     ),
   },
   {
-    id: 'types',
-    icon: 'category',
-    title: 'Types de cookies utilisés',
+    id: 'categories',
+    icon: LuLayers,
+    title: 'Catégories de cookies',
     content: (
       <div className="cookie-types-grid">
-        {cookieTypes.map((c, i) => (
-          <div key={i} className="cookie-type-card" style={{ '--cookie-color': c.color }}>
+        {CATEGORIES.map(({ key, label, icon: Icon, color, description, required }) => (
+          <div key={key} className="cookie-type-card" style={{ '--cookie-color': color }}>
             <div className="cookie-type-card__head">
-              <span className="material-symbols-rounded">{c.icon}</span>
+              <Icon aria-hidden />
               <div>
-                <h4>{c.name}</h4>
-                {c.required && <span className="required-badge">Obligatoire</span>}
+                <h4>{label}</h4>
+                {required && <span className="required-badge">Obligatoire</span>}
               </div>
             </div>
-            <p>{c.desc}</p>
-            <ul>
-              {c.examples.map((e, j) => <li key={j}>{e}</li>)}
-            </ul>
+            <p>{description}</p>
           </div>
         ))}
       </div>
     ),
   },
   {
+    id: 'liste',
+    icon: LuListChecks,
+    title: 'Liste des cookies utilisés',
+    content: <CookieTable />,
+  },
+  {
     id: 'duree',
-    icon: 'schedule',
-    title: 'Durée de conservation',
+    icon: LuClock,
+    title: 'Durée de conservation de vos choix',
     content: (
       <ul>
-        <li><strong>Cookies de session :</strong> supprimés à la fermeture du navigateur</li>
-        <li><strong>Cookies persistants :</strong> conservés jusqu'à 13 mois maximum</li>
-        <li><strong>Cookies de consentement :</strong> conservés 6 mois (mémorisation de vos choix)</li>
-        <li><strong>Cookies analytiques :</strong> conservés 13 mois</li>
+        <li>Vos choix sont conservés <strong>6 mois</strong> dans le cookie <code>iac_consent</code>, puis vous sont redemandés.</li>
+        <li>Ils vous sont également redemandés si la liste des cookies utilisés évolue de façon significative.</li>
+        <li>Lorsque vous retirez votre accord à une catégorie, les cookies correspondants sont immédiatement supprimés.</li>
       </ul>
     ),
   },
   {
     id: 'gestion',
-    icon: 'settings',
+    icon: LuSettings2,
     title: 'Gérer vos préférences',
     content: (
       <>
         <p>
-          Vous pouvez gérer vos préférences de cookies à tout moment via le bandeau de consentement
-          disponible en bas de page, ou directement depuis les paramètres de votre navigateur.
+          Vous pouvez modifier vos choix à tout moment : via le bouton en haut de cette page, le lien
+          « Gérer les cookies » en pied de page, ou l'icône cookie affichée en bas à gauche de l'écran.
         </p>
-        <p>Instructions pour les principaux navigateurs :</p>
+        <ManageButton />
+        <p style={{ marginTop: 20 }}>Vous pouvez aussi bloquer les cookies depuis votre navigateur :</p>
         <ul>
-          <li><strong>Google Chrome :</strong> Paramètres → Confidentialité et sécurité → Cookies</li>
-          <li><strong>Mozilla Firefox :</strong> Options → Vie privée et sécurité → Cookies</li>
-          <li><strong>Safari :</strong> Préférences → Confidentialité → Cookies</li>
-          <li><strong>Microsoft Edge :</strong> Paramètres → Confidentialité → Cookies</li>
+          <li><strong>Google Chrome :</strong> Paramètres → Confidentialité et sécurité → Cookies tiers</li>
+          <li><strong>Mozilla Firefox :</strong> Paramètres → Vie privée et sécurité</li>
+          <li><strong>Safari :</strong> Réglages → Confidentialité</li>
+          <li><strong>Microsoft Edge :</strong> Paramètres → Cookies et autorisations de site</li>
         </ul>
-        <div className="legal-highlight">
-          La désactivation de certains cookies peut affecter le fonctionnement de notre site
-          et la qualité de votre expérience de navigation.
-        </div>
       </>
     ),
   },
   {
     id: 'tiers',
-    icon: 'share',
+    icon: LuShare2,
     title: 'Cookies tiers',
     content: (
       <p>
-        Notre site peut intégrer des contenus ou services de tiers (réseaux sociaux, outils d'analyse)
-        susceptibles de déposer leurs propres cookies. L'IAC n'a pas de contrôle sur ces cookies tiers.
-        Nous vous invitons à consulter les politiques de confidentialité de ces services pour plus d'informations.
+        Les outils tiers (mesure d'audience, réseaux sociaux) déposent leurs propres cookies et appliquent leur propre
+        politique de confidentialité. Ils ne sont chargés qu'après votre accord pour la catégorie concernée. Pour en
+        savoir plus sur le traitement de vos données, consultez notre{' '}
+        <Link to="/confidentialite">Politique de confidentialité</Link>.
+      </p>
+    ),
+  },
+  {
+    id: 'contact',
+    icon: LuMail,
+    title: 'Contact',
+    content: (
+      <p>
+        Pour toute question sur les cookies, écrivez-nous à <a href={`mailto:${ORG.email}`}>{ORG.email}</a>.
       </p>
     ),
   },
 ];
 
 const CookiePolicyPage = () => (
-  <div>
-    <section className="legal-hero">
-      <motion.div
-        className="legal-hero__content"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <span className="legal-hero__tag">
-          <span className="material-symbols-rounded">cookie</span>
-          Politique de Cookies
-        </span>
-        <h1>Gestion des Cookies</h1>
-        <p>
-          Transparence totale sur l'utilisation des cookies sur le site de l'IAC
-          et sur la manière dont vous pouvez gérer vos préférences.
-        </p>
-        <div className="legal-hero__meta">
-          <span><span className="material-symbols-rounded">calendar_month</span> Dernière mise à jour : Janvier 2025</span>
-        </div>
-      </motion.div>
-    </section>
-
-    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <div className="legal-body">
-        <nav className="legal-toc">
-          <h3>Sommaire</h3>
-          <ol>
-            {sections.map((s) => (
-              <li key={s.id}><a href={`#${s.id}`}>{s.title}</a></li>
-            ))}
-          </ol>
-        </nav>
-
-        {sections.map((s, i) => (
-          <motion.div
-            key={s.id}
-            id={s.id}
-            className="legal-section"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <div className="legal-section__title">
-              <span className="material-symbols-rounded">{s.icon}</span>
-              <h2>{s.title}</h2>
-            </div>
-            {s.content}
-          </motion.div>
-        ))}
-      </div>
-    </div>
-
-    <nav className="legal-footer-nav">
-      <Link to="/confidentialite">
-        <span className="material-symbols-rounded">privacy_tip</span> Confidentialité
-      </Link>
-      <Link to="/conditions-utilisation">
-        <span className="material-symbols-rounded">description</span> CGU
-      </Link>
-      <Link to="/remboursement">
-        <span className="material-symbols-rounded">payments</span> Remboursement
-      </Link>
-      <Link to="/">
-        <span className="material-symbols-rounded">home</span> Accueil
-      </Link>
-    </nav>
-  </div>
+  <LegalLayout
+    tag="Politique de cookies"
+    tagIcon={LuCookie}
+    title="Cookies et traceurs"
+    intro="Transparence totale sur les cookies utilisés par le site de l'IAC, et contrôle complet sur vos choix, à tout moment."
+    sections={sections}
+    before={<ConsentStatus />}
+  />
 );
 
 export default CookiePolicyPage;

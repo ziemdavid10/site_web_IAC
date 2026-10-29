@@ -1,16 +1,22 @@
-import React from 'react';
+import { useState } from 'react';
+import {
+  LuBrain as BrainIcon,
+  LuCalendarClock as ScheduleIcon,
+  LuGlobe as GlobeIcon,
+  LuGraduationCap as GraduationIcon,
+  LuHandshake as HandshakeIcon,
+  LuLaptop as LaptopIcon,
+  LuMail as MailIcon,
+  LuMapPin as LocationIcon,
+  LuMegaphone as MegaphoneIcon,
+  LuRocket as RocketIcon,
+  LuUser as PersonIcon,
+  LuCheck,
+  LuBriefcase as BriefcaseIcon,
+} from 'react-icons/lu';
 import { motion } from 'framer-motion';
-import megaphoneIcon from '../../assets/icons/megaphone.png';
-import laptopIcon from '../../assets/icons/laptop.png';
-import brainIcon from '../../assets/icons/brain.png';
-import globeIcon from '../../assets/icons/globe.png';
-import rocketIcon from '../../assets/icons/rocket.png';
-import handshakeIcon from '../../assets/icons/handshake.png';
-import graduationIcon from '../../assets/icons/graduation.png';
-import mailIcon from '../../assets/icons/mail.png';
-import scheduleIcon from '../../assets/icons/schedule.png';
-import locationIcon from '../../assets/icons/location.png';
-import personIcon from '../../assets/icons/person.png';
+import Modal from '../ui/Modal';
+import ApplicationForm, { SPONTANEOUS } from './ApplicationForm';
 import './Careers.scss';
 
 const jobOffers = [
@@ -20,9 +26,9 @@ const jobOffers = [
     location: 'Yaoundé — Coron',
     duration: '3 mois, renouvelable',
     remuneration: 'Rémunéré',
-    icon: megaphoneIcon,
-    icon1: mailIcon,
-    icon2: scheduleIcon,
+    icon: MegaphoneIcon,
+    icon1: MailIcon,
+    icon2: ScheduleIcon,
     color: '#00d2ff',
     requirements: [
       'Licence en Marketing, Communication ou équivalent',
@@ -39,9 +45,9 @@ const jobOffers = [
     location: 'Yaoundé — Coron',
     duration: '3 mois, renouvelable',
     remuneration: 'Rémunéré',
-    icon: laptopIcon,
-    icon1: mailIcon,
-    icon2: scheduleIcon,
+    icon: LaptopIcon,
+    icon1: MailIcon,
+    icon2: ScheduleIcon,
     color: '#8b5cf6',
     requirements: [
       'Licence en Informatique, Programmation ou Bases de données',
@@ -58,9 +64,9 @@ const jobOffers = [
     location: 'Yaoundé',
     duration: 'Indéterminée',
     remuneration: 'Selon projet',
-    icon: brainIcon,
-    icon1: mailIcon,
-    icon2: scheduleIcon,
+    icon: BrainIcon,
+    icon1: MailIcon,
+    icon2: ScheduleIcon,
     color: '#f59e0b',
     special: true,
     requirements: [
@@ -75,13 +81,16 @@ const jobOffers = [
 ];
 
 const values = [
-  { icon: globeIcon, title: 'Impact Africain', desc: 'Contribuez à des projets qui transforment réellement le Cameroun et l\'Afrique.' },
-  { icon: rocketIcon, title: 'Innovation', desc: 'Travaillez sur des technologies de pointe dans un environnement stimulant.' },
-  { icon: handshakeIcon, title: 'Réseau', desc: 'Intégrez un réseau d\'experts nationaux et internationaux de l\'IA.' },
-  { icon: graduationIcon, title: 'Formation', desc: 'Accédez à des formations continues et des certifications reconnues.' },
+  { icon: GlobeIcon, title: 'Impact Africain', desc: 'Contribuez à des projets qui transforment réellement le Cameroun et l\'Afrique.' },
+  { icon: RocketIcon, title: 'Innovation', desc: 'Travaillez sur des technologies de pointe dans un environnement stimulant.' },
+  { icon: HandshakeIcon, title: 'Réseau', desc: 'Intégrez un réseau d\'experts nationaux et internationaux de l\'IA.' },
+  { icon: GraduationIcon, title: 'Formation', desc: 'Accédez à des formations continues et des certifications reconnues.' },
 ];
 
-const Careers = () => (
+const Careers = () => {
+  const [applyTo, setApplyTo] = useState(null);
+
+  return (
   <section className="careers-section" id="careers">
     <motion.div
       className="section-header"
@@ -104,7 +113,7 @@ const Careers = () => (
           viewport={{ once: true }}
           transition={{ delay: i * 0.1 }}
         >
-          <img src={v.icon} alt="" width={40} height={40} />
+          <v.icon size={40} aria-hidden />
           <h4>{v.title}</h4>
           <p>{v.desc}</p>
         </motion.div>
@@ -124,7 +133,7 @@ const Careers = () => (
           style={{ '--offer-color': offer.color }}
         >
           <div className="offer-card__top">
-            <div className="offer-icon"><img src={offer.icon} alt="" width={40} height={40} /></div>
+            <div className="offer-icon"><offer.icon size={40} aria-hidden /></div>
             <div className="offer-meta-top">
               <span className="offer-duration">{offer.duration}</span>
               <span className="offer-pay">{offer.remuneration}</span>
@@ -134,28 +143,48 @@ const Careers = () => (
           <h3>{offer.title}</h3>
 
           <div className="offer-details">
-            <span><img src={locationIcon} alt="" width={15} height={15} /> {offer.location}</span>
-            <span><img src={personIcon} alt="" width={15} height={15} /> {offer.count}</span>
+            <span><LocationIcon size={15} aria-hidden /> {offer.location}</span>
+            <span><PersonIcon size={15} aria-hidden /> {offer.count}</span>
           </div>
 
           <div className="requirements">
             <h4>Profil recherché :</h4>
             <ul>
               {offer.requirements.map((req, i) => (
-                <li key={i}><span className="req-check">✓</span> {req}</li>
+                <li key={i}><span className="req-check"><LuCheck aria-hidden /></span> {req}</li>
               ))}
             </ul>
           </div>
 
           <div className="offer-card__footer">
-            <p className="rdv-info"><img src={offer.icon2} alt="" width={15} height={15} /> {offer.rdv}</p>
-            <p className="contact-info"><img src={offer.icon1} alt="" width={15} height={15} /> {offer.contact}</p>
-            <button className="btn-apply">Postuler maintenant</button>
+            <p className="rdv-info"><offer.icon2 size={15} aria-hidden /> {offer.rdv}</p>
+            <p className="contact-info"><offer.icon1 size={15} aria-hidden /> {offer.contact}</p>
+            <button type="button" className="btn-apply" onClick={() => setApplyTo(offer.title)}>
+              Postuler maintenant
+            </button>
           </div>
         </motion.div>
       ))}
     </div>
+
+    <div className="careers__spontaneous">
+      <p>Aucune offre ne correspond à votre profil ? Envoyez-nous une candidature spontanée.</p>
+      <button type="button" className="btn-spontaneous" onClick={() => setApplyTo(SPONTANEOUS)}>
+        Candidature spontanée
+      </button>
+    </div>
+
+    <Modal
+      open={Boolean(applyTo)}
+      onClose={() => setApplyTo(null)}
+      title="Postuler à l'IAC"
+      subtitle={applyTo && applyTo !== SPONTANEOUS ? applyTo : 'Candidature spontanée'}
+      icon={BriefcaseIcon}
+    >
+      <ApplicationForm key={applyTo} offers={jobOffers.map((o) => o.title)} defaultOffer={applyTo || ''} />
+    </Modal>
   </section>
-);
+  );
+};
 
 export default Careers;

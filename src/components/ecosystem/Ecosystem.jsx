@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LuCheck, LuChevronUp, LuArrowRight } from 'react-icons/lu';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Ecosystem.scss';
 
@@ -108,7 +109,7 @@ const Ecosystem = () => {
                   exit={{ opacity: 0, height: 0 }}
                 >
                   {actor.achievements.map((a, i) => (
-                    <span key={i} className="achievement-tag">✓ {a}</span>
+                    <span key={i} className="achievement-tag"><LuCheck aria-hidden /> {a}</span>
                   ))}
                 </motion.div>
               )}
@@ -116,7 +117,7 @@ const Ecosystem = () => {
 
             <div className="actor-card__footer">
               <button className="btn-text">
-                {selected === index ? 'Réduire ↑' : 'En savoir plus →'}
+                {selected === index ? <>Réduire <LuChevronUp aria-hidden /></> : <>En savoir plus <LuArrowRight aria-hidden /></>}
               </button>
             </div>
           </motion.div>

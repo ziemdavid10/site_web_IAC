@@ -1,12 +1,12 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import './LegalShared.scss';
-
+import {
+  LuBadgeCheck, LuBrain, LuCalendarDays, LuClipboardList, LuFlame, LuHandshake, LuIdCard, LuLayers, LuListChecks, LuScale, LuWallet, LuZap,
+} from 'react-icons/lu';
+import LegalLayout from './LegalLayout';
 const services = [
   {
     name: 'Adhésion annuelle',
     price: '10 000 FCFA / an',
-    icon: 'card_membership',
+    icon: LuIdCard,
     refundable: 'Non remboursable après activation',
     delay: '7 jours après paiement (si non activée)',
     color: '#312783',
@@ -14,7 +14,7 @@ const services = [
   {
     name: 'Formation Rapide (1 jour)',
     price: 'Sur devis',
-    icon: 'bolt',
+    icon: LuZap,
     refundable: 'Remboursable sous conditions',
     delay: '48h avant la formation',
     color: '#0891b2',
@@ -22,7 +22,7 @@ const services = [
   {
     name: 'Formation Intensive (3 jours)',
     price: 'Sur devis',
-    icon: 'local_fire_department',
+    icon: LuFlame,
     refundable: 'Remboursable sous conditions',
     delay: '72h avant la formation',
     color: '#7c3aed',
@@ -30,7 +30,7 @@ const services = [
   {
     name: 'Formation Technique (1 mois)',
     price: 'Sur devis',
-    icon: 'psychology',
+    icon: LuBrain,
     refundable: 'Remboursable partiellement',
     delay: '7 jours avant le début',
     color: '#f59e0b',
@@ -38,7 +38,7 @@ const services = [
   {
     name: 'Inscription JCIA',
     price: 'Variable selon édition',
-    icon: 'event',
+    icon: LuCalendarDays,
     refundable: 'Remboursable sous conditions',
     delay: '14 jours avant l\'événement',
     color: '#10b981',
@@ -48,7 +48,7 @@ const services = [
 const sections = [
   {
     id: 'engagement',
-    icon: 'handshake',
+    icon: LuHandshake,
     title: 'Notre engagement',
     content: (
       <>
@@ -66,14 +66,14 @@ const sections = [
   },
   {
     id: 'services',
-    icon: 'category',
+    icon: LuLayers,
     title: 'Conditions par type de service',
     content: (
       <div className="refund-services-grid">
         {services.map((s, i) => (
           <div key={i} className="refund-service-card" style={{ '--service-color': s.color }}>
             <div className="refund-service-card__head">
-              <span className="material-symbols-rounded">{s.icon}</span>
+              <s.icon aria-hidden />
               <div>
                 <h4>{s.name}</h4>
                 <span className="price">{s.price}</span>
@@ -90,7 +90,7 @@ const sections = [
   },
   {
     id: 'conditions',
-    icon: 'rule',
+    icon: LuListChecks,
     title: 'Conditions générales de remboursement',
     content: (
       <>
@@ -114,7 +114,7 @@ const sections = [
   },
   {
     id: 'procedure',
-    icon: 'assignment',
+    icon: LuClipboardList,
     title: 'Procédure de demande',
     content: (
       <>
@@ -134,7 +134,7 @@ const sections = [
   },
   {
     id: 'modalites',
-    icon: 'payments',
+    icon: LuWallet,
     title: 'Modalités de remboursement',
     content: (
       <>
@@ -153,7 +153,7 @@ const sections = [
   },
   {
     id: 'litiges',
-    icon: 'balance',
+    icon: LuScale,
     title: 'Litiges et recours',
     content: (
       <>
@@ -179,76 +179,14 @@ const sections = [
 ];
 
 const RefundPage = () => (
-  <div>
-    <section className="legal-hero">
-      <motion.div
-        className="legal-hero__content"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <span className="legal-hero__tag">
-          <span className="material-symbols-rounded">payments</span>
-          Politique de Remboursement
-        </span>
-        <h1>Conditions de Remboursement</h1>
-        <p>
-          Transparence et équité dans le traitement de vos demandes de remboursement
-          pour tous les services proposés par l'Intelligence Artificielle Cameroun.
-        </p>
-        <div className="legal-hero__meta">
-          <span><span className="material-symbols-rounded">calendar_month</span> Dernière mise à jour : Janvier 2025</span>
-          <span><span className="material-symbols-rounded">verified</span> Engagement de transparence IAC</span>
-        </div>
-      </motion.div>
-    </section>
-
-    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <div className="legal-body">
-        <nav className="legal-toc">
-          <h3>Sommaire</h3>
-          <ol>
-            {sections.map((s) => (
-              <li key={s.id}><a href={`#${s.id}`}>{s.title}</a></li>
-            ))}
-          </ol>
-        </nav>
-
-        {sections.map((s, i) => (
-          <motion.div
-            key={s.id}
-            id={s.id}
-            className="legal-section"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <div className="legal-section__title">
-              <span className="material-symbols-rounded">{s.icon}</span>
-              <h2>{s.title}</h2>
-            </div>
-            {s.content}
-          </motion.div>
-        ))}
-      </div>
-    </div>
-
-    <nav className="legal-footer-nav">
-      <Link to="/confidentialite">
-        <span className="material-symbols-rounded">privacy_tip</span> Confidentialité
-      </Link>
-      <Link to="/conditions-utilisation">
-        <span className="material-symbols-rounded">description</span> CGU
-      </Link>
-      <Link to="/politique-cookies">
-        <span className="material-symbols-rounded">cookie</span> Cookies
-      </Link>
-      <Link to="/">
-        <span className="material-symbols-rounded">home</span> Accueil
-      </Link>
-    </nav>
-  </div>
+  <LegalLayout
+    tag="Politique de remboursement"
+    tagIcon={LuWallet}
+    title="Conditions de remboursement"
+    intro="Transparence et équité dans le traitement de vos demandes de remboursement pour tous les services proposés par l'Intelligence Artificielle Cameroun."
+    meta={[{ icon: LuBadgeCheck, text: 'Engagement de transparence IAC' }]}
+    sections={sections}
+  />
 );
 
 export default RefundPage;

@@ -1,7 +1,10 @@
-import { motion } from 'framer-motion';
-import { NavLink } from 'react-router-dom';
-import { FaFacebook, FaLinkedin, FaYoutube, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGlobe } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
+import { NavLink, Link } from 'react-router-dom';
+import { LuCookie } from 'react-icons/lu';
+import {
+  FaFacebook, FaLinkedin, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGlobe,
+} from 'react-icons/fa';
+import { useCookieConsent } from '../../context/cookieConsent';
+import { ORG } from '../../config/site';
 import './Footer.scss';
 
 const navLinks = [
@@ -11,82 +14,97 @@ const navLinks = [
   { label: 'Écosystème IA', to: '/ecosysteme' },
   { label: 'Actualités', to: '/actualites' },
   { label: 'Carrières', to: '/carrieres' },
-  { label: 'Membres', to: '/membres' },
-  { label: 'JCIA', to: '/jcia' },
+  { label: 'Membres & partenaires', to: '/membres' },
+  { label: 'JCIA 2025', to: '/jcia/2025' },
+  { label: 'JCIA 2023', to: '/jcia/2023' },
 ];
+
+const legalLinks = [
+  { label: 'Politique de confidentialité', to: '/confidentialite' },
+  { label: 'Politique de cookies', to: '/politique-cookies' },
+  { label: "Conditions d'utilisation", to: '/conditions-utilisation' },
+  { label: 'Remboursement', to: '/remboursement' },
+];
+
+const socials = [
+  { href: ORG.socials.facebook, label: 'Facebook', icon: FaFacebook },
+  { href: ORG.socials.linkedin, label: 'LinkedIn', icon: FaLinkedin },
+];
+
+const keyPartners = ['PNUD', 'Expertise France', 'UE', 'GAIN', 'MINPOSTEL'];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { openPreferences } = useCookieConsent();
 
   return (
     <footer className="footer">
       <div className="footer__top">
         <div className="footer__brand">
-          <img src="/Logo 1.png" alt="IAC Logo" className="footer__logo" />
+          <img src="/Logo 1.png" alt="Intelligence Artificielle Cameroun" className="footer__logo" width="120" height="74" loading="lazy" />
           <p>
             Premier hub national dédié à l'Intelligence Artificielle au Cameroun.
             Membre du réseau mondial GAIN. Lauréat IAChallenge 2022 — Bordeaux.
           </p>
-          {/* <div className="footer__badges">
-            <span>🏆 IAChallenge 2022</span>
-            <span>🌍 Membre GAIN</span>
-            <span>🇨🇲 ONG Reconnue</span>
-          </div> */}
           <div className="social-links">
-            <a href="https://www.facebook.com/share/1ALEzaXhg8/?mibextid=wwXIfr" aria-label="Facebook"><FaFacebook /></a>
-            {/* <a href="#" aria-label="Twitter/X"><FaXTwitter /></a> */}
-            <a href="https://www.linkedin.com/company/iacameroun/" aria-label="LinkedIn"><FaLinkedin /></a>
-            {/* <a href="#" aria-label="YouTube"><FaYoutube /></a> */}
-            <a href="mailto:contact@iacameroun.com" aria-label="Email"><FaEnvelope /></a>
+            {socials.map(({ href, label, icon: Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (nouvel onglet)`}>
+                <Icon aria-hidden />
+              </a>
+            ))}
+            <a href={`mailto:${ORG.email}`} aria-label="Nous écrire par e-mail"><FaEnvelope aria-hidden /></a>
           </div>
         </div>
 
-        <div className="footer__links">
+        <nav className="footer__links" aria-label="Plan du site">
           <h4>Navigation</h4>
           <ul>
-            {navLinks.map((l, i) => (
-              <li key={i}><NavLink to={l.to}>{l.label}</NavLink></li>
+            {navLinks.map((l) => (
+              <li key={l.to}><NavLink to={l.to} end>{l.label}</NavLink></li>
             ))}
           </ul>
-        </div>
+        </nav>
 
         <div className="footer__contact">
           <h4>Contactez-nous</h4>
-          <div className="contact-item">
-            <FaMapMarkerAlt className="icon" />
-            <span>Rue de l'aéroport, Immeuble Lucas Mill,<br />Face Cami-Toyota Coron, Yaoundé, Cameroun</span>
-          </div>
-          <div className="contact-item">
-            <FaPhoneAlt className="icon" />
-            <span>+237 699 089 937</span>
-          </div>
-          <div className="contact-item">
-            <FaEnvelope className="icon" />
-            <span>contact@iacameroun.com</span>
-          </div>
-          <div className="contact-item">
-            <FaGlobe className="icon" />
-            <span>www.iacameroun.com</span>
-          </div>
+          <address>
+            <div className="contact-item">
+              <FaMapMarkerAlt className="icon" aria-hidden />
+              <span>Rue de l'aéroport, Immeuble Lucas Mill,<br />Face Cami-Toyota Coron, Yaoundé, Cameroun</span>
+            </div>
+            <a className="contact-item" href={ORG.phoneHref}>
+              <FaPhoneAlt className="icon" aria-hidden />
+              <span>{ORG.phone}</span>
+            </a>
+            <a className="contact-item" href={`mailto:${ORG.email}`}>
+              <FaEnvelope className="icon" aria-hidden />
+              <span>{ORG.email}</span>
+            </a>
+            <Link className="contact-item" to="/">
+              <FaGlobe className="icon" aria-hidden />
+              <span>{ORG.website}</span>
+            </Link>
+          </address>
 
           <div className="footer__partners-logos">
             <h4>Partenaires Clés</h4>
-            <div className="mini-partners">
-              {['PNUD', 'Expertise France', 'UE', 'GAIN', 'MINPOSTEL'].map((p, i) => (
-                <span key={i} className="mini-partner">{p}</span>
-              ))}
-            </div>
+            <ul className="mini-partners">
+              {keyPartners.map((p) => <li key={p} className="mini-partner">{p}</li>)}
+            </ul>
           </div>
         </div>
       </div>
 
       <div className="footer__bottom">
-        <p>&copy; {currentYear} Intelligence Artificielle Cameroun (IAC). Tous droits réservés.</p>
-        <div className="footer__legal">
-          <a href="#">Mentions Légales</a>
-          <a href="#">Politique de Confidentialité</a>
-          <a href="#">Plan du Site</a>
-        </div>
+        <p>&copy; {currentYear} {ORG.name} ({ORG.short}). Tous droits réservés.</p>
+        <nav className="footer__legal" aria-label="Informations légales">
+          {legalLinks.map((l) => (
+            <Link key={l.to} to={l.to}>{l.label}</Link>
+          ))}
+          <button type="button" className="footer__cookies-btn" onClick={openPreferences}>
+            <LuCookie aria-hidden /> Gérer les cookies
+          </button>
+        </nav>
       </div>
     </footer>
   );

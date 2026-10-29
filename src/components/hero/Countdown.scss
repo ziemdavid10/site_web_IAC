@@ -1,4 +1,4 @@
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 
 .countdown {
   display: flex;
@@ -22,10 +22,9 @@
     letter-spacing: 2.5px;
     color: $accent-color;
 
-    .material-symbols-rounded {
-      font-family: 'Material Symbols Rounded';
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    svg {
       font-size: 1.1rem;
+      flex-shrink: 0;
     }
   }
 
@@ -100,4 +99,11 @@
       strong { font-size: 1.7rem; }
     }
   }
+}
+
+.countdown__state {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.3px;
 }

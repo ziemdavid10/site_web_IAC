@@ -1,4 +1,4 @@
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 
 .membership-section {
   padding: 100px 8%;
@@ -176,3 +176,8 @@
 }
 
 @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+// Icônes react-icons (charte IAC)
+.plan-icon { display: flex; color: var(--plan-color, #312783); }
+.membership-card__badge { display: inline-flex; align-items: center; gap: 4px; }
+.check { display: inline-flex; svg { display: block; } }

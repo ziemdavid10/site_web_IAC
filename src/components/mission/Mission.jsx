@@ -1,25 +1,26 @@
-import React from 'react';
+import {
+  LuBuilding2 as BuildingIcon,
+  LuFileText as DocumentIcon,
+  LuGlobe as GlobeIcon,
+  LuGraduationCap as GraduationIcon,
+  LuHandshake as HandshakeIcon,
+  LuLightbulb as IdeaIcon,
+  LuRocket as RocketIcon,
+  LuScale as JusticeIcon,
+} from 'react-icons/lu';
 import { motion } from 'framer-motion';
-import buildingIcon from '../../assets/icons/building.png';
-import globeIcon from '../../assets/icons/globe.png';
-import ideaIcon from '../../assets/icons/idea.png';
-import justiceIcon from '../../assets/icons/justice.png';
-import rocketIcon from '../../assets/icons/rocket.png';
-import graduationIcon from '../../assets/icons/graduation.png';
-import documentIcon from '../../assets/icons/document.png';
-import handshakeIcon from '../../assets/icons/handshake.png';
 import './Mission.scss';
 
 const missions = [
-  { icon: buildingIcon, text: "Accompagner l'État du Cameroun dans sa politique d'adoption de l'IA." },
-  { icon: handshakeIcon, text: "Fédérer les acteurs de l'écosystème IA au Cameroun." },
-  { icon: buildingIcon, text: "Accompagner les organisations publiques et privées dans leur transformation numérique." },
-  { icon: globeIcon, text: "Promouvoir les initiatives camerounaises à l'international." },
-  { icon: ideaIcon, text: "Résoudre des problèmes locaux par des solutions d'IA locale et souveraine." },
-  { icon: justiceIcon, text: "Favoriser une IA éthique, inclusive et bénéfique pour tous les citoyens." },
-  { icon: rocketIcon, text: "Renforcer la capacité d'innovation technologique au Cameroun." },
-  { icon: graduationIcon, text: "Soutenir les talents locaux, les startups et les chercheurs en IA." },
-  { icon: documentIcon, text: "Contribuer à la création d'un cadre réglementaire pour l'IA au Cameroun." },
+  { icon: BuildingIcon, text: "Accompagner l'État du Cameroun dans sa politique d'adoption de l'IA." },
+  { icon: HandshakeIcon, text: "Fédérer les acteurs de l'écosystème IA au Cameroun." },
+  { icon: BuildingIcon, text: "Accompagner les organisations publiques et privées dans leur transformation numérique." },
+  { icon: GlobeIcon, text: "Promouvoir les initiatives camerounaises à l'international." },
+  { icon: IdeaIcon, text: "Résoudre des problèmes locaux par des solutions d'IA locale et souveraine." },
+  { icon: JusticeIcon, text: "Favoriser une IA éthique, inclusive et bénéfique pour tous les citoyens." },
+  { icon: RocketIcon, text: "Renforcer la capacité d'innovation technologique au Cameroun." },
+  { icon: GraduationIcon, text: "Soutenir les talents locaux, les startups et les chercheurs en IA." },
+  { icon: DocumentIcon, text: "Contribuer à la création d'un cadre réglementaire pour l'IA au Cameroun." },
 ];
 
 const keyFacts = [
@@ -76,7 +77,7 @@ const Vision = () => (
               viewport={{ once: true }}
               transition={{ delay: i * 0.07 }}
             >
-              <span className="mission-icon"><img src={m.icon} alt="" width={28} height={28} /></span>
+              <span className="mission-icon"><m.icon size={28} aria-hidden /></span>
               <span>{m.text}</span>
             </motion.div>
           ))}

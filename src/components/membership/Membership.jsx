@@ -1,7 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
+import { LuBuilding2 as BuildingIcon, LuUser as PersonIcon, LuStar, LuCheck, LuIdCard } from 'react-icons/lu';
 import { motion } from 'framer-motion';
-import personIcon from '../../assets/icons/person.png';
-import buildingIcon from '../../assets/icons/building.png';
+import Modal from '../ui/Modal';
+import MembershipForm from './MembershipForm';
 import './Membership.scss';
 
 const plans = [
@@ -9,7 +10,7 @@ const plans = [
     name: 'Membre Individuel',
     price: '10 000',
     period: 'FCFA / an',
-    icon: personIcon,
+    icon: PersonIcon,
     color: '#00d2ff',
     audience: 'Étudiants, chercheurs, professionnels, entrepreneurs',
     benefits: [
@@ -22,12 +23,13 @@ const plans = [
       'Certificat de membre officiel IAC',
     ],
     cta: 'Devenir Membre',
+    action: 'join',
   },
   {
     name: 'Membre Entreprise',
     price: 'Sur devis',
     period: 'Partenariat annuel',
-    icon: buildingIcon,
+    icon: BuildingIcon,
     color: '#312783',
     featured: true,
     audience: 'PME, grandes entreprises, institutions publiques',
@@ -42,10 +44,23 @@ const plans = [
       'Rapport annuel d\'impact et de visibilité',
     ],
     cta: 'Nous Contacter',
+    action: 'partner',
   },
 ];
 
-const Membership = () => (
+const Membership = () => {
+  const [open, setOpen] = useState(false);
+
+  // Plan individuel → formulaire d'adhésion ; plan entreprise → formulaire de partenariat
+  const handleCta = (plan) => {
+    if (plan.action === 'partner') {
+      document.getElementById('partenariat')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      setOpen(true);
+    }
+  };
+
+  return (
   <section className="membership-section">
     <motion.div
       className="membership-section__header"
@@ -70,10 +85,10 @@ const Membership = () => (
           whileHover={{ y: -8 }}
           style={{ '--plan-color': plan.color }}
         >
-          {plan.featured && <div className="membership-card__badge">⭐ Recommandé</div>}
+          {plan.featured && <div className="membership-card__badge"><LuStar aria-hidden /> Recommandé</div>}
 
           <div className="membership-card__header">
-            <div className="plan-icon"><img src={plan.icon} alt="" width={48} height={48} /></div>
+            <div className="plan-icon"><plan.icon size={48} aria-hidden /></div>
             <h3>{plan.name}</h3>
             <div className="price">
               <strong>{plan.price}</strong>
@@ -86,12 +101,12 @@ const Membership = () => (
             <ul>
               {plan.benefits.map((b, j) => (
                 <li key={j}>
-                  <span className="check">✓</span> {b}
+                  <span className="check"><LuCheck aria-hidden /></span> {b}
                 </li>
               ))}
             </ul>
 
-            <button className="btn-join">
+            <button type="button" className="btn-join" onClick={() => handleCta(plan)}>
               {plan.cta}
             </button>
 
@@ -105,7 +120,18 @@ const Membership = () => (
         </motion.div>
       ))}
     </div>
+
+    <Modal
+      open={open}
+      onClose={() => setOpen(false)}
+      title="Adhésion — Membre individuel"
+      subtitle="Rejoignez le premier réseau national dédié à l'IA au Cameroun."
+      icon={LuIdCard}
+    >
+      <MembershipForm />
+    </Modal>
   </section>
-);
+  );
+};
 
 export default Membership;

@@ -1,4 +1,4 @@
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 
 .agenda {
   padding: 100px 8%;
@@ -134,3 +134,6 @@
     }
   }
 }
+
+// Icônes react-icons (charte IAC)
+.time, .loc { display: flex; align-items: center; gap: 6px; svg { flex-shrink: 0; } }

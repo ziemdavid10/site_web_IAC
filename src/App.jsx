@@ -1,51 +1,72 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
 import JciaCountdownBanner from './components/navbar/JciaCountdownBanner';
 import Footer from './components/footer/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import Cursor from './components/cursor/Cursor';
 import CookieConsent from './components/cookies/CookieConsent';
+import ScrollToTop from './components/routing/ScrollToTop';
+import ErrorBoundary from './components/routing/ErrorBoundary';
+import PageLoader from './components/routing/PageLoader';
+import PageMeta from './components/seo/PageMeta';
+import { CookieConsentProvider } from './context/CookieConsentContext';
+import { routes, redirects } from './router/routes';
+import ErrorPage from './pages/error/ErrorPage';
 
-import HomePage from './pages/home/HomePage';
-import PresentationPage from './pages/presentation/PresentationPage';
-import ServicesPage from './pages/services/ServicesPage';
-import EcosystemePage from './pages/ecosysteme/EcosystemePage';
-import ActualitesPage from './pages/actualites/ActualitesPage';
-import CarrieresPage from './pages/carrieres/CarrieresPage';
-import MembresPage from './pages/membres/MembresPage';
-import JciaRoute from './pages/jcia/JciaRoute';
-import NotFoundPage from './pages/legal/NotFoundPage';
-import PrivacyPage from './pages/legal/PrivacyPage';
-import TermsPage from './pages/legal/TermsPage';
-import CookiePolicyPage from './pages/legal/CookiePolicyPage';
-import RefundPage from './pages/legal/RefundPage';
-
-import './App.scss';
+// La clé liée à l'URL réinitialise l'ErrorBoundary quand on change de page.
+const AppRoutes = () => {
+  const { pathname } = useLocation();
+  return (
+    <ErrorBoundary key={pathname}>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {routes.map(({ path, component: Page, title, description }) => (
+            <Route
+              key={path}
+              path={path}
+              element={(
+                <>
+                  <PageMeta title={title} description={description} path={path} />
+                  <Page />
+                </>
+              )}
+            />
+          ))}
+          {redirects.map(({ from, to }) => (
+            <Route key={from} path={from} element={<Navigate to={to} replace />} />
+          ))}
+          <Route
+            path="*"
+            element={(
+              <>
+                <PageMeta title="Page introuvable" noindex />
+                <ErrorPage code={404} />
+              </>
+            )}
+          />
+        </Routes>
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
 
 function App() {
   return (
     <BrowserRouter>
-      <ScrollProgress />
-      <JciaCountdownBanner />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/presentation" element={<PresentationPage />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/ecosysteme" element={<EcosystemePage />} />
-        <Route path="/actualites" element={<ActualitesPage />} />
-        <Route path="/carrieres" element={<CarrieresPage />} />
-        <Route path="/membres" element={<MembresPage />} />
-        <Route path="/jcia" element={<JciaRoute />} />
-        <Route path="/confidentialite" element={<PrivacyPage />} />
-        <Route path="/conditions-utilisation" element={<TermsPage />} />
-        <Route path="/politique-cookies" element={<CookiePolicyPage />} />
-        <Route path="/remboursement" element={<RefundPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <Footer />
-      <CookieConsent />
-      <Cursor />
+      <CookieConsentProvider>
+        <a href="#contenu" className="skip-link">Aller au contenu</a>
+        <ScrollToTop />
+        <ScrollProgress />
+        <JciaCountdownBanner />
+        <Navbar />
+        <div id="contenu" tabIndex={-1}>
+          <AppRoutes />
+        </div>
+        <Footer />
+        <CookieConsent />
+        <Cursor />
+      </CookieConsentProvider>
     </BrowserRouter>
   );
 }

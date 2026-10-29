@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
+import { LuClock as ClockIcon, LuMapPin as LocationIcon } from 'react-icons/lu';
 import './Agenda.scss';
 
-import clockIcon from "../../assets/icons/schedule.png"
-import locationIcon from "../../assets/icons/location.png"
 
 const events = [
   {
@@ -88,8 +87,8 @@ const Agenda = () => (
               {event.type}
             </div>
             <h3>{event.title}</h3>
-            <p className="time"> <img src={clockIcon} alt=""/> {event.time}</p>
-            <p className="loc"><img src={locationIcon} alt=""/> {event.location}</p>
+            <p className="time"> <ClockIcon aria-hidden /> {event.time}</p>
+            <p className="loc"><LocationIcon aria-hidden /> {event.location}</p>
             <p className="desc">{event.description}</p>
           </div>
 

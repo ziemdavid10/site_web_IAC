@@ -13,7 +13,9 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     "react/prop-types": "off",
-    "no-unused-vars": "warn",
+    // Les textes du site sont en français : les apostrophes sont légitimes.
+    "react/no-unescaped-entities": "off",
+    "no-unused-vars": ["warn", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_", "ignoreRestSiblings": true }],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

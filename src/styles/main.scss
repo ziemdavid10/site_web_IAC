@@ -1,0 +1,9 @@
+// Point d'entrée des styles globaux — importé une seule fois (main.jsx).
+// Les styles des composants restent à côté de leur composant.
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/layout';
+@use 'base/buttons';
+@use 'base/accessibility';
+@use 'base/scrollbar';
+@use 'base/animations';

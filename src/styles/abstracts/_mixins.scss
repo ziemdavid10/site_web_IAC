@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+@mixin mobile {
+  @media (max-width: $tablet) { @content; }
+}
+
+@mixin small {
+  @media (max-width: $mobile) { @content; }
+}
+
+@mixin desktop-up {
+  @media (min-width: #{$desktop + 1px}) { @content; }
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Marge haute compensant l'en-tête fixe
+@mixin below-header($extra: 0px) {
+  padding-top: calc(#{$header-height} + #{$extra});
+  @media (max-width: 1100px) { padding-top: calc(#{$header-height-tablet} + #{$extra}); }
+  @media (max-width: $tablet) { padding-top: calc(#{$header-height-mobile} + #{$extra}); }
+}
+
+@mixin focus-ring($color: $accent-color) {
+  &:focus-visible { outline: 3px solid rgba($color, 0.6); outline-offset: 2px; }
+}
+
+// Marges intérieures standard d'une section
+@mixin section-padding {
+  padding: 100px 10%;
+  @media (min-width: 1600px) { padding: 120px 12%; }
+  @media (max-width: $tablet) { padding: 60px 5%; }
+}

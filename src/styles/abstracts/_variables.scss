@@ -1,0 +1,46 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Charte graphique IAC — jetons de design
+// Ces variables sont disponibles dans tous les fichiers SCSS via :
+//   @use '<chemin>/styles/abstracts' as *;
+// Ce dossier ne produit AUCUN CSS : il peut être importé partout sans doublon.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Couleurs principales (logo IAC)
+$primary-color: #312783;   // Indigo IAC
+$secondary-color: #4a3fc2;
+$accent-color: #00d2ff;    // Cyan
+$teal-color: #0891b2;
+$gold-color: #f59e0b;
+$dark-color: #0d0a3e;
+$deep-color: #1a1060;
+
+// Texte & fonds
+$text-light: #ffffff;
+$text-dark: #1a1a1a;
+$text-muted: #5f5b7a;
+$bg-light: #f4f7fe;
+$bg-section-alt: #f8f9ff;
+
+// Typographie
+$font-family: 'DM Sans Variable', 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+// Mouvement
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Points de rupture
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 1024px;
+
+// En-tête fixe (bandeau JCIA + navbar) — utilisé pour les marges hautes
+$header-height: 180px;
+$header-height-tablet: 147px;
+$header-height-mobile: 130px;
+
+// Superpositions
+$z-cursor: 999;
+$z-fab: 1900;
+$z-navbar: 2000;
+$z-banner: 2100;
+$z-progress: 2200;
+$z-modal: 9995;

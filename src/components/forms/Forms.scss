@@ -1,0 +1,256 @@
+@use 'sass:color';
+@use '../../styles/abstracts' as *;
+
+$field-line: rgba($primary-color, 0.16);
+
+.iac-form {
+  display: grid;
+  gap: 18px;
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    @media (max-width: 600px) { grid-template-columns: 1fr; }
+  }
+
+  &__note {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba($accent-color, 0.08);
+    border-left: 3px solid $accent-color;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: #3d3960;
+  }
+
+  &__legend {
+    font-size: 0.78rem;
+    color: $text-muted;
+    .form-field__req { color: #dc2626; }
+  }
+}
+
+// ── CHAMP ───────────────────────────────────────────────────────────────────
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+
+  label { font-size: 0.86rem; font-weight: 700; color: $primary-color; }
+
+  &__req { color: #dc2626; }
+
+  &__control { position: relative; }
+
+  &__icon {
+    position: absolute;
+    left: 14px;
+    top: 15px;
+    font-size: 1.05rem;
+    color: rgba($primary-color, 0.45);
+    pointer-events: none;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid $field-line;
+    background: #fff;
+    color: $text-dark;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+
+    &::placeholder { color: #9a97b3; }
+    &:hover { border-color: rgba($primary-color, 0.32); }
+    &:focus { outline: none; border-color: $primary-color; box-shadow: 0 0 0 4px rgba($accent-color, 0.18); }
+  }
+
+  &.has-icon input, &.has-icon select { padding-left: 42px; }
+
+  textarea { min-height: 130px; resize: vertical; line-height: 1.55; }
+
+  select {
+    cursor: pointer;
+    padding-right: 42px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23312783' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+
+  &.has-error {
+    input, select, textarea { border-color: #dc2626; background: #fffafa; }
+  }
+
+  &__hint { font-size: 0.78rem; color: $text-muted; }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #dc2626;
+    svg { flex-shrink: 0; }
+  }
+}
+
+// ── PASTILLES (choix multiples) ─────────────────────────────────────────────
+.form-chips {
+  border: none;
+  display: grid;
+  gap: 10px;
+
+  legend { margin-bottom: 8px; font-size: 0.86rem; font-weight: 700; color: $primary-color; }
+
+  &__list { display: flex; flex-wrap: wrap; gap: 8px; }
+}
+
+.form-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 50px;
+  border: 1.5px solid $field-line;
+  background: #fff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #3d3960;
+  cursor: pointer;
+  transition: $transition;
+
+  input { position: absolute; opacity: 0; pointer-events: none; }
+
+  &:hover { border-color: $primary-color; }
+  &:has(input:focus-visible) { box-shadow: 0 0 0 4px rgba($accent-color, 0.25); }
+
+  &.is-checked {
+    background: $primary-color;
+    border-color: $primary-color;
+    color: #fff;
+    svg { color: $accent-color; }
+  }
+}
+
+// ── CONSENTEMENT ────────────────────────────────────────────────────────────
+.form-consent {
+  label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #3d3960;
+    cursor: pointer;
+  }
+
+  input {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    accent-color: $primary-color;
+    cursor: pointer;
+  }
+
+  a { color: $primary-color; font-weight: 700; text-underline-offset: 3px; }
+  .form-field__error { margin: 6px 0 0 32px; }
+}
+
+.form-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+// ── ENVOI & RETOURS ─────────────────────────────────────────────────────────
+.form-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, $primary-color, color.adjust($primary-color, $lightness: 8%));
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba($primary-color, 0.28);
+  transition: $transition;
+
+  svg { font-size: 1.15rem; }
+
+  &:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 34px rgba($primary-color, 0.36); }
+  &:disabled { opacity: 0.75; cursor: progress; }
+  @include focus-ring;
+
+  &__spin { animation: spin 0.8s linear infinite; }
+}
+
+.form-alert {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 0.86rem;
+  line-height: 1.5;
+
+  svg { flex-shrink: 0; margin-top: 2px; font-size: 1.1rem; }
+  a { color: inherit; font-weight: 700; }
+}
+
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 12px;
+  text-align: center;
+
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 6px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.12);
+    color: #059669;
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    color: $primary-color;
+    &:hover { background: none; -webkit-text-fill-color: $primary-color; }
+  }
+  p { max-width: 440px; font-size: 0.92rem; line-height: 1.6; color: $text-muted; }
+}
+
+.form-link {
+  margin-top: 6px;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  color: $primary-color;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  @include focus-ring;
+}

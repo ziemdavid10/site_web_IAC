@@ -1,123 +1,190 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import './LegalShared.scss';
+import {
+  LuShieldCheck, LuBuilding2, LuDatabase, LuTarget, LuGavel, LuShare2, LuGlobe, LuClock,
+  LuUserCheck, LuLock, LuUsers, LuCookie, LuFilePen, LuSettings2, LuLandmark,
+} from 'react-icons/lu';
+import LegalLayout from './LegalLayout';
+import { useCookieConsent } from '../../context/cookieConsent';
+import { ORG } from '../../config/site';
+
+const ManageCookiesButton = () => {
+  const { openPreferences } = useCookieConsent();
+  return (
+    <button type="button" className="legal-btn legal-btn--primary" onClick={openPreferences}>
+      <LuSettings2 aria-hidden /> Gérer mes préférences de cookies
+    </button>
+  );
+};
 
 const sections = [
   {
     id: 'responsable',
-    icon: 'corporate_fare',
+    icon: LuBuilding2,
     title: 'Responsable du traitement',
     content: (
       <>
         <p>
-          Le responsable du traitement de vos données personnelles est <strong>Intelligence Artificielle Cameroun (IAC)</strong>,
-          organisation à but non lucratif reconnue par l'État du Cameroun.
+          Le responsable du traitement de vos données personnelles est <strong>{ORG.name} ({ORG.short})</strong>,
+          organisation à but non lucratif reconnue par l'État du Cameroun, éditrice du site {ORG.website}.
         </p>
         <div className="legal-contact-box">
           <h4>Coordonnées du responsable</h4>
           <p>
-            Rue de l'aéroport, Immeuble Lucas Mill, Face Cami-Toyota Coron, Yaoundé, Cameroun<br />
-            Téléphone : <a href="tel:+237699089937">+237 699 089 937</a><br />
-            Email : <a href="mailto:contact@iacameroun.com">contact@iacameroun.com</a>
+            {ORG.address}<br />
+            Téléphone : <a href={ORG.phoneHref}>{ORG.phone}</a><br />
+            Email : <a href={`mailto:${ORG.email}`}>{ORG.email}</a>
           </p>
         </div>
       </>
     ),
   },
   {
+    id: 'cadre',
+    icon: LuLandmark,
+    title: 'Cadre juridique',
+    content: (
+      <>
+        <p>
+          Les traitements réalisés par l'IAC respectent la <strong>loi n° 2024/017 du 23 décembre 2024 relative
+          à la protection des données à caractère personnel au Cameroun</strong>, entrée en vigueur le 23 juin 2026,
+          ainsi que la législation camerounaise sur la cybersécurité et les communications électroniques.
+        </p>
+        <p>
+          Lorsque nos services s'adressent à des personnes situées dans l'Union européenne (partenaires, participants
+          en ligne aux JCIA), nous appliquons également les principes du Règlement général sur la protection des
+          données (RGPD).
+        </p>
+      </>
+    ),
+  },
+  {
     id: 'collecte',
-    icon: 'database',
+    icon: LuDatabase,
     title: 'Données collectées',
     content: (
       <>
-        <p>Dans le cadre de nos activités, nous collectons les données suivantes :</p>
+        <p>Nous ne collectons que les données strictement nécessaires à chaque finalité :</p>
         <ul>
-          <li><strong>Données d'identification :</strong> nom, prénom, adresse email, numéro de téléphone</li>
-          <li><strong>Données professionnelles :</strong> organisation, fonction, secteur d'activité</li>
-          <li><strong>Données de navigation :</strong> adresse IP, type de navigateur, pages visitées, durée de visite</li>
-          <li><strong>Données de formulaire :</strong> informations soumises via nos formulaires de contact, d'adhésion ou de partenariat</li>
-          <li><strong>Données d'événements :</strong> inscriptions aux JCIA, formations et ateliers IAC</li>
+          <li><strong>Identification et contact :</strong> nom, prénom, adresse email, numéro de téléphone.</li>
+          <li><strong>Données professionnelles :</strong> organisation, fonction, secteur d'activité.</li>
+          <li><strong>Formulaires :</strong> informations transmises via nos formulaires d'adhésion, de partenariat, de candidature ou de contact.</li>
+          <li><strong>Événements :</strong> inscriptions aux JCIA, formations et ateliers, votes aux Cameroon Artificial Intelligence Awards.</li>
+          <li><strong>Navigation :</strong> adresse IP, type de navigateur, pages consultées — uniquement via des cookies que vous avez acceptés, à l'exception des données techniques indispensables.</li>
         </ul>
+        <div className="legal-highlight">
+          Nous ne collectons aucune donnée sensible (santé, opinions politiques ou religieuses, données biométriques)
+          via ce site.
+        </div>
       </>
     ),
   },
   {
     id: 'finalites',
-    icon: 'task_alt',
+    icon: LuTarget,
     title: 'Finalités du traitement',
     content: (
       <>
-        <p>Vos données sont traitées pour les finalités suivantes :</p>
         <ul>
-          <li>Gestion des adhésions et du registre des membres IAC</li>
-          <li>Organisation et gestion des événements (JCIA, formations, ateliers)</li>
-          <li>Communication institutionnelle et envoi de newsletters</li>
-          <li>Traitement des demandes de partenariat et de contact</li>
-          <li>Amélioration de nos services numériques et de notre site web</li>
-          <li>Respect de nos obligations légales et réglementaires</li>
-          <li>Promotion de l'écosystème IA camerounais</li>
+          <li>Gestion des adhésions et du registre des membres de l'IAC.</li>
+          <li>Organisation des événements (JCIA, formations, ateliers) et délivrance d'attestations.</li>
+          <li>Traitement des demandes de partenariat, de contact et des candidatures.</li>
+          <li>Communication institutionnelle et lettres d'information, avec votre accord.</li>
+          <li>Mesure d'audience et amélioration du site, avec votre accord.</li>
+          <li>Respect de nos obligations légales et réglementaires.</li>
         </ul>
         <div className="legal-highlight">
-          Nous ne vendons, ne louons et ne cédons jamais vos données personnelles à des tiers à des fins commerciales.
+          L'IAC ne vend, ne loue et ne cède jamais vos données personnelles à des tiers à des fins commerciales.
         </div>
       </>
     ),
   },
   {
     id: 'bases',
-    icon: 'gavel',
-    title: 'Bases légales du traitement',
+    icon: LuGavel,
+    title: 'Bases légales',
+    content: (
+      <ul>
+        <li><strong>Consentement explicite, libre et éclairé :</strong> lettres d'information, cookies non essentiels. Il peut être retiré à tout moment.</li>
+        <li><strong>Exécution d'un contrat ou de mesures précontractuelles :</strong> adhésion, inscription à un événement ou à une formation.</li>
+        <li><strong>Intérêt légitime :</strong> sécurité du site, gestion des demandes de contact.</li>
+        <li><strong>Obligation légale :</strong> conservation des pièces comptables et réponses aux autorités.</li>
+      </ul>
+    ),
+  },
+  {
+    id: 'destinataires',
+    icon: LuShare2,
+    title: 'Destinataires et prestataires',
     content: (
       <>
-        <p>Nos traitements reposent sur les bases légales suivantes :</p>
+        <p>
+          Vos données sont accessibles aux seules équipes habilitées de l'IAC. Elles peuvent être transmises à des
+          prestataires techniques agissant sur nos instructions :
+        </p>
         <ul>
-          <li><strong>Consentement :</strong> pour l'envoi de communications marketing et l'utilisation de cookies non essentiels</li>
-          <li><strong>Exécution d'un contrat :</strong> pour la gestion des adhésions et inscriptions aux événements</li>
-          <li><strong>Intérêt légitime :</strong> pour l'amélioration de nos services et la sécurité de notre site</li>
-          <li><strong>Obligation légale :</strong> pour le respect des réglementations applicables au Cameroun</li>
+          <li><strong>Hébergement du site :</strong> Network Solutions.</li>
+          <li><strong>Envoi des formulaires :</strong> EmailJS, qui achemine vos demandes (adhésion, partenariat, candidature) vers notre boîte de réception.</li>
+          <li><strong>Polices et ressources du site :</strong> hébergées sur nos propres serveurs ; aucune donnée n'est transmise à un service de polices tiers.</li>
+          <li><strong>Mesure d'audience et marketing :</strong> uniquement si vous les avez acceptés — voir la <Link to="/politique-cookies">Politique de cookies</Link>.</li>
+          <li><strong>Partenaires d'événements :</strong> uniquement les informations nécessaires (ex. liste d'émargement), avec information préalable.</li>
         </ul>
       </>
+    ),
+  },
+  {
+    id: 'transferts',
+    icon: LuGlobe,
+    title: 'Transferts hors du Cameroun',
+    content: (
+      <p>
+        Certains prestataires (hébergement, outils de mesure) peuvent traiter des données hors du territoire camerounais.
+        Conformément à la loi n° 2024/017, ces transferts ne sont réalisés que vers des pays ou des prestataires offrant
+        un niveau de protection suffisant, dans le respect des autorisations requises auprès de l'autorité de protection
+        des données.
+      </p>
     ),
   },
   {
     id: 'conservation',
-    icon: 'schedule',
-    title: 'Durée de conservation',
+    icon: LuClock,
+    title: 'Durées de conservation',
     content: (
-      <>
-        <p>Vos données sont conservées pour les durées suivantes :</p>
-        <ul>
-          <li><strong>Données membres :</strong> durée de l'adhésion + 3 ans après résiliation</li>
-          <li><strong>Données événements :</strong> 5 ans à compter de l'événement</li>
-          <li><strong>Données de contact :</strong> 3 ans à compter du dernier contact</li>
-          <li><strong>Données de navigation :</strong> 13 mois maximum</li>
-          <li><strong>Données comptables :</strong> 10 ans conformément à la législation camerounaise</li>
-        </ul>
-      </>
+      <table className="legal-table">
+        <thead>
+          <tr><th>Données</th><th>Durée</th></tr>
+        </thead>
+        <tbody>
+          <tr><td data-label="Données">Membres</td><td data-label="Durée">Durée de l'adhésion + 3 ans</td></tr>
+          <tr><td data-label="Données">Participants aux événements</td><td data-label="Durée">5 ans après l'événement</td></tr>
+          <tr><td data-label="Données">Demandes de contact et partenariat</td><td data-label="Durée">3 ans après le dernier échange</td></tr>
+          <tr><td data-label="Données">Candidatures</td><td data-label="Durée">2 ans, sauf demande de suppression</td></tr>
+          <tr><td data-label="Données">Choix en matière de cookies</td><td data-label="Durée">6 mois</td></tr>
+          <tr><td data-label="Données">Statistiques de navigation</td><td data-label="Durée">13 mois maximum</td></tr>
+          <tr><td data-label="Données">Pièces comptables</td><td data-label="Durée">10 ans (obligation légale)</td></tr>
+        </tbody>
+      </table>
     ),
   },
   {
     id: 'droits',
-    icon: 'verified_user',
+    icon: LuUserCheck,
     title: 'Vos droits',
     content: (
       <>
-        <p>Conformément à la réglementation applicable, vous disposez des droits suivants :</p>
+        <p>Vous disposez à tout moment des droits suivants sur vos données :</p>
         <ul>
-          <li><strong>Droit d'accès :</strong> obtenir une copie de vos données personnelles</li>
-          <li><strong>Droit de rectification :</strong> corriger des données inexactes ou incomplètes</li>
-          <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
-          <li><strong>Droit à la limitation :</strong> restreindre le traitement de vos données</li>
-          <li><strong>Droit d'opposition :</strong> vous opposer au traitement de vos données</li>
-          <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré</li>
-          <li><strong>Droit de retrait du consentement :</strong> à tout moment, sans affecter les traitements antérieurs</li>
+          <li><strong>Accès :</strong> savoir quelles données nous détenons et en obtenir une copie.</li>
+          <li><strong>Rectification :</strong> faire corriger des données inexactes ou incomplètes.</li>
+          <li><strong>Effacement :</strong> obtenir la suppression de vos données.</li>
+          <li><strong>Opposition :</strong> refuser l'utilisation de vos données, notamment à des fins de prospection ou de profilage.</li>
+          <li><strong>Retrait du consentement :</strong> à tout moment, sans remettre en cause les traitements antérieurs.</li>
         </ul>
         <div className="legal-contact-box">
           <h4>Exercer vos droits</h4>
           <p>
-            Pour exercer vos droits, contactez-nous à :<br />
-            <a href="mailto:contact@iacameroun.com">contact@iacameroun.com</a><br />
-            Nous répondrons dans un délai de 30 jours.
+            Écrivez-nous à <a href={`mailto:${ORG.email}?subject=${encodeURIComponent('Exercice de mes droits — données personnelles')}`}>{ORG.email}</a>{' '}
+            en précisant votre demande. Nous répondons dans un délai d'un mois. Si vous estimez que vos droits ne sont
+            pas respectés, vous pouvez saisir l'Autorité de protection des données à caractère personnel du Cameroun.
           </p>
         </div>
       </>
@@ -125,127 +192,66 @@ const sections = [
   },
   {
     id: 'securite',
-    icon: 'security',
+    icon: LuLock,
     title: 'Sécurité des données',
     content: (
-      <>
-        <p>
-          L'IAC met en œuvre des mesures techniques et organisationnelles appropriées pour protéger
-          vos données contre tout accès non autorisé, perte, destruction ou divulgation accidentelle.
-        </p>
-        <ul>
-          <li>Chiffrement des données en transit (HTTPS/TLS)</li>
-          <li>Accès restreint aux données sur la base du besoin d'en connaître</li>
-          <li>Sensibilisation régulière de notre équipe à la protection des données</li>
-          <li>Procédures de gestion des incidents de sécurité</li>
-        </ul>
-      </>
+      <ul>
+        <li>Chiffrement des échanges entre votre navigateur et notre site (HTTPS/TLS).</li>
+        <li>Accès aux données limité aux personnes qui en ont besoin.</li>
+        <li>Sensibilisation régulière de nos équipes à la protection des données.</li>
+        <li>Procédure de gestion et de notification des incidents de sécurité.</li>
+      </ul>
+    ),
+  },
+  {
+    id: 'mineurs',
+    icon: LuUsers,
+    title: 'Mineurs',
+    content: (
+      <p>
+        Nos services s'adressent principalement aux adultes. Les mineurs participant à nos activités (concours,
+        ateliers scolaires) doivent disposer de l'autorisation de leur représentant légal, qui peut exercer leurs
+        droits en leur nom.
+      </p>
     ),
   },
   {
     id: 'cookies',
-    icon: 'cookie',
+    icon: LuCookie,
     title: 'Cookies',
     content: (
       <>
         <p>
-          Notre site utilise des cookies pour améliorer votre expérience de navigation.
-          Pour plus d'informations, consultez notre{' '}
-          <Link to="/politique-cookies">Politique de Cookies</Link>.
+          Les cookies non essentiels ne sont déposés qu'avec votre accord. Le détail des cookies, de leur durée et de
+          leurs émetteurs figure dans notre <Link to="/politique-cookies">Politique de cookies</Link>.
         </p>
-        <div className="legal-highlight">
-          Vous pouvez gérer vos préférences de cookies à tout moment via le bandeau de consentement
-          disponible en bas de page.
-        </div>
+        <ManageCookiesButton />
       </>
     ),
   },
   {
     id: 'modifications',
-    icon: 'edit_note',
-    title: 'Modifications de la politique',
+    icon: LuFilePen,
+    title: 'Évolution de cette politique',
     content: (
       <p>
-        L'IAC se réserve le droit de modifier la présente politique à tout moment.
-        Toute modification substantielle sera notifiée par email aux membres enregistrés
-        ou via un avis visible sur notre site. La date de dernière mise à jour est
-        indiquée en haut de cette page.
+        Cette politique peut être mise à jour pour refléter l'évolution de nos services ou de la réglementation.
+        La date de dernière mise à jour figure en haut de page. En cas de changement important, nous vous en
+        informerons par un avis sur le site ou par email pour les membres.
       </p>
     ),
   },
 ];
 
 const PrivacyPage = () => (
-  <div>
-    <section className="legal-hero">
-      <motion.div
-        className="legal-hero__content"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <span className="legal-hero__tag">
-          <span className="material-symbols-rounded">privacy_tip</span>
-          Politique de Confidentialité
-        </span>
-        <h1>Protection de vos données personnelles</h1>
-        <p>
-          L'IAC s'engage à protéger votre vie privée et à traiter vos données
-          personnelles avec transparence, conformément aux réglementations applicables.
-        </p>
-        <div className="legal-hero__meta">
-          <span><span className="material-symbols-rounded">calendar_month</span> Dernière mise à jour : Janvier 2025</span>
-          <span><span className="material-symbols-rounded">corporate_fare</span> Intelligence Artificielle Cameroun</span>
-        </div>
-      </motion.div>
-    </section>
-
-    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-      <div className="legal-body">
-        <nav className="legal-toc">
-          <h3>Sommaire</h3>
-          <ol>
-            {sections.map((s) => (
-              <li key={s.id}><a href={`#${s.id}`}>{s.title}</a></li>
-            ))}
-          </ol>
-        </nav>
-
-        {sections.map((s, i) => (
-          <motion.div
-            key={s.id}
-            id={s.id}
-            className="legal-section"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <div className="legal-section__title">
-              <span className="material-symbols-rounded">{s.icon}</span>
-              <h2>{s.title}</h2>
-            </div>
-            {s.content}
-          </motion.div>
-        ))}
-      </div>
-    </div>
-
-    <nav className="legal-footer-nav">
-      <Link to="/conditions-utilisation">
-        <span className="material-symbols-rounded">description</span> Conditions d'utilisation
-      </Link>
-      <Link to="/politique-cookies">
-        <span className="material-symbols-rounded">cookie</span> Politique de Cookies
-      </Link>
-      <Link to="/remboursement">
-        <span className="material-symbols-rounded">payments</span> Remboursement
-      </Link>
-      <Link to="/">
-        <span className="material-symbols-rounded">home</span> Accueil
-      </Link>
-    </nav>
-  </div>
+  <LegalLayout
+    tag="Politique de confidentialité"
+    tagIcon={LuShieldCheck}
+    title="Protection de vos données personnelles"
+    intro="L'IAC s'engage à traiter vos données avec transparence, loyauté et sécurité. Cette page explique quelles données nous collectons, pourquoi, et comment exercer vos droits."
+    meta={[{ icon: LuLandmark, text: 'Conforme à la loi n° 2024/017' }]}
+    sections={sections}
+  />
 );
 
 export default PrivacyPage;

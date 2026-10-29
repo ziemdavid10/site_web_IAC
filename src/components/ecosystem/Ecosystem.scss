@@ -1,4 +1,4 @@
-@use '../../App.scss' as *;
+@use '../../styles/abstracts' as *;
 
 .ecosystem {
   padding: 100px 8%;
@@ -148,3 +148,6 @@
     &__header .section-title { font-size: 2rem; }
   }
 }
+
+// Icônes react-icons (charte IAC)
+.achievement-tag { display: inline-flex; align-items: center; gap: 4px; }
