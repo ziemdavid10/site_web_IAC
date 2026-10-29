@@ -12,6 +12,9 @@ export const NEXT_JCIA = {
   city: 'Yaoundé, Cameroun',
 };
 
+// Nom de marque affiché dans les titres de pages et les moteurs de recherche
+export const BRAND = 'IAC-CAIPI';
+
 export const ORG = {
   name: 'Intelligence Artificielle Cameroun',
   short: 'IAC',
@@ -21,6 +24,13 @@ export const ORG = {
   address: "Rue de l'aéroport, Immeuble Lucas Mill, Face Cami-Toyota Coron, Yaoundé, Cameroun",
   website: 'www.iacameroun.com',
   websiteUrl: 'https://www.iacameroun.com',
+  institute: {
+    name: 'Cameroon Artificial Intelligence Policy Institute',
+    short: 'CAIPI',
+    logo: '/logos/caipi.webp',
+    logo2x: '/logos/caipi@2x.webp',
+    logoFallback: '/logos/caipi.png',
+  },
   socials: {
     facebook: 'https://www.facebook.com/share/1ALEzaXhg8/?mibextid=wwXIfr',
     linkedin: 'https://www.linkedin.com/company/iacameroun/',

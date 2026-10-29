@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import { BRAND } from '../config/site';
 
-const SITE_NAME = 'IAC — Intelligence Artificielle Cameroun';
+const SITE_NAME = `${BRAND} — Intelligence Artificielle Cameroun`;
 const SITE_URL = 'https://www.iacameroun.com';
 
 const setMeta = (selector, attr, value) => {
@@ -17,7 +18,8 @@ const setMeta = (selector, attr, value) => {
 // Met à jour le titre, la description et les balises de partage de la page.
 const usePageMeta = ({ title, description, path, noindex = false }) => {
   useEffect(() => {
-    const fullTitle = title ? `${title} | IAC` : SITE_NAME;
+    // Le nom de marque est ajouté sauf s'il figure déjà dans le titre
+    const fullTitle = !title ? SITE_NAME : title.includes(BRAND) ? title : `${title} | ${BRAND}`;
     document.title = fullTitle;
     if (description) {
       setMeta('meta[name="description"]', 'content', description);

@@ -6,6 +6,7 @@ import { JCIA_OFFICIAL_URL, NEXT_JCIA } from '../../config/site';
 import './Navbar.scss';
 
 const navLinks = [
+  { name: 'Accueil', to: '/', end: true },
   { name: 'Présentation', to: '/presentation' },
   { name: 'Services', to: '/services' },
   { name: 'Écosystème', to: '/ecosysteme' },
@@ -241,7 +242,7 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMobileMenuOpen ? 'menu-open' : ''}`} aria-label="Navigation principale">
       <div className="navbar-container">
-        <NavLink to="/" className="logo-area" aria-label="IAC — Accueil">
+        <NavLink to="/" className="logo-area" aria-label="IAC-CAIPI — Accueil">
           <img src="/Logo 1.png" alt="Intelligence Artificielle Cameroun" className="main-logo" />
         </NavLink>
 
@@ -251,7 +252,7 @@ const Navbar = () => {
               <DesktopDropdown key={link.name} link={link} isActive={isGroupActive(link)} />
             ) : (
               <li key={link.name} className="nav-item">
-                <NavLink to={link.to} className={({ isActive }) => (isActive ? 'active' : '')}>
+                <NavLink to={link.to} end={link.end} className={({ isActive }) => (isActive ? 'active' : '')}>
                   {link.name}
                 </NavLink>
               </li>
@@ -309,6 +310,7 @@ const Navbar = () => {
                   <motion.li key={link.name} variants={linkVariants}>
                     <NavLink
                       to={link.to}
+                      end={link.end}
                       className={({ isActive }) => (isActive ? 'active' : '')}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >

@@ -37,3 +37,6 @@
 // Empêche les animations d'entrée latérales de créer un défilement horizontal.
 // « clip » (et non « hidden ») conserve le fonctionnement de position: sticky.
 #contenu { overflow-x: clip; }
+
+// Empêche la coupure d'un nom composé (ex. « IAC-CAIPI »)
+.nowrap { white-space: nowrap; }

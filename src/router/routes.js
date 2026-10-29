@@ -10,7 +10,7 @@ export const routes = [
   {
     path: '/',
     component: lazy(() => import('../pages/home/HomePage')),
-    title: 'Intelligence Artificielle Cameroun — Hub national de l\'IA',
+    title: 'IAC-CAIPI — Intelligence Artificielle Cameroun, hub national de l\'IA',
     description: 'Premier hub national dédié à l\'intelligence artificielle au Cameroun : formations, écosystème, événements et JCIA.',
   },
   {

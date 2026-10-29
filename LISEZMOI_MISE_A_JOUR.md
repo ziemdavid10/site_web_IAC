@@ -1,4 +1,4 @@
-# Mise à jour du site IAC — v2.0.0
+# Mise à jour du site IAC-CAIPI — v2.1.0
 
 Copiez le contenu de cette archive à la racine du projet `site_web_IAC/` en écrasant les
 fichiers existants (l'arborescence est conservée), puis exécutez :
@@ -14,6 +14,7 @@ npm run build
 Ces fichiers ne sont plus utilisés (remplacés ou jamais référencés par le site) :
 
 ```
+public/Logo CAIPI.png
 public/RAPPORT IAC ANNEE 1 Original.docx
 public/Rapport_final_JCIA_2025-1 (1).docx
 public/docx_extract/[Content_Types].xml
@@ -97,7 +98,7 @@ rm -rf src/App.scss src/assets/icons src/components/PageHero.scss \
   "public/Rapport_final_JCIA_2025-1 (1).docx" public/dribbble.png public/facebook.png \
   public/hero.png public/instagram.png public/linkedin.png public/mountains.png public/mypic.jpg \
   public/people.webp public/planets.png public/scroll.png public/stars.png public/sun.png \
-  public/youtube.png public/ziem.jpg
+  public/youtube.png public/ziem.jpg "public/Logo CAIPI.png"
 ```
 
 Également recommandé : supprimer `build.zip` (15 Mo) à la racine du dépôt.
@@ -114,7 +115,15 @@ rm -rf src/App.scss src/assets/icons src/components/PageHero.scss \
   (envoi direct des formulaires ; sans eux, la messagerie du visiteur s'ouvre avec l'e-mail
   pré-rempli), `VITE_GA_MEASUREMENT_ID`, `VITE_META_PIXEL_ID`.
 
-## 3. Où modifier quoi
+## 3. Nom « IAC-CAIPI » dans les moteurs de recherche
+
+Le titre affiché par Bing / Google (« IAC-CMCT ») provient de l'ancienne version en ligne.
+Après le déploiement, demandez une nouvelle indexation pour accélérer la mise à jour :
+- Bing Webmaster Tools → Inspection d'URL → « Demander l'indexation » (https://www.bing.com/webmasters)
+- Google Search Console → Inspection de l'URL → « Demander une indexation »
+Soumettez aussi `https://www.iacameroun.com/sitemap.xml` dans les deux outils.
+
+## 4. Où modifier quoi
 
 Voir le `README.md` (section « Tâches courantes ») : date des JCIA, contenu des pages JCIA,
 routes, cookies, couleurs de la charte.

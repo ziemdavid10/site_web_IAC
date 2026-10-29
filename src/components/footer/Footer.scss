@@ -225,3 +225,45 @@
 
   .social-links a { @include focus-ring; }
 }
+
+// Logos IAC + CAIPI
+.footer__logos {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 14px;
+
+  a { display: inline-flex; border-radius: 10px; @include focus-ring; }
+  picture { display: inline-flex; }
+
+  .footer__logo {
+    width: auto;
+    height: 64px;
+    margin-bottom: 0;
+    border-radius: 10px;
+  }
+
+  .footer__logo--caipi { height: 56px; }
+
+  @media (max-width: 400px) {
+    gap: 12px;
+    .footer__logo { height: 52px; }
+    .footer__logo--caipi { height: 46px; }
+  }
+}
+
+.footer__logos-sep {
+  width: 1px;
+  align-self: stretch;
+  margin: 6px 0;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.footer .footer__brand .footer__institute {
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: $accent-color;
+  opacity: 1;
+}

@@ -114,7 +114,10 @@ const Hero = () => {
         <div className="ring ring--2" />
         <div className="ring ring--3" />
         <div className="globe-core">
-          <img src="/Logo CAIPI.png" alt="IAC" />
+          <picture>
+            <source type="image/webp" srcSet="/logos/caipi.webp 1x, /logos/caipi@2x.webp 2x" />
+            <img src="/logos/caipi.png" alt="CAIPI — Cameroon Artificial Intelligence Policy Institute" width="480" height="211" />
+          </picture>
         </div>
       </div>
     </div>

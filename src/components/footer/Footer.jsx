@@ -4,7 +4,7 @@ import {
   FaFacebook, FaLinkedin, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGlobe,
 } from 'react-icons/fa';
 import { useCookieConsent } from '../../context/cookieConsent';
-import { ORG } from '../../config/site';
+import { BRAND, ORG } from '../../config/site';
 import './Footer.scss';
 
 const navLinks = [
@@ -41,7 +41,24 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer__top">
         <div className="footer__brand">
-          <img src="/Logo 1.png" alt="Intelligence Artificielle Cameroun" className="footer__logo" width="120" height="74" loading="lazy" />
+          <div className="footer__logos">
+            <Link to="/" aria-label={`${ORG.name} — Accueil`}>
+              <img src="/Logo 1.png" alt={ORG.name} className="footer__logo" width="606" height="375" loading="lazy" />
+            </Link>
+            <span className="footer__logos-sep" aria-hidden />
+            <picture>
+              <source type="image/webp" srcSet={`${ORG.institute.logo} 1x, ${ORG.institute.logo2x} 2x`} />
+              <img
+                src={ORG.institute.logoFallback}
+                alt={`${ORG.institute.short} — ${ORG.institute.name}`}
+                className="footer__logo footer__logo--caipi"
+                width="480"
+                height="211"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <p className="footer__institute">{ORG.institute.short} · {ORG.institute.name}</p>
           <p>
             Premier hub national dédié à l'Intelligence Artificielle au Cameroun.
             Membre du réseau mondial GAIN. Lauréat IAChallenge 2022 — Bordeaux.
@@ -96,7 +113,7 @@ const Footer = () => {
       </div>
 
       <div className="footer__bottom">
-        <p>&copy; {currentYear} {ORG.name} ({ORG.short}). Tous droits réservés.</p>
+        <p>&copy; {currentYear} {ORG.name} — <span className="nowrap">{BRAND}</span>. Tous droits réservés.</p>
         <nav className="footer__legal" aria-label="Informations légales">
           {legalLinks.map((l) => (
             <Link key={l.to} to={l.to}>{l.label}</Link>
