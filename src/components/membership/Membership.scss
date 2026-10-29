@@ -6,6 +6,9 @@
   position: relative;
   overflow: hidden;
 
+  @media (min-width: 1600px) { padding: 120px 12%; }
+  @media (max-width: 768px)  { padding: 60px 5%; }
+
   &::before {
     content: '';
     position: absolute;

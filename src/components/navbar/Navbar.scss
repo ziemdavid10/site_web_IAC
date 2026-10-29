@@ -1,26 +1,28 @@
 @use 'sass:color';
 
-// Variables de design IA
 $primary-blue: #312783;
-$accent-cyan: #00d2ff;
-$text-white: #ffffff;
-$glass-bg: rgba(49, 39, 131, 0.85);
-$transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+$accent-cyan:  #00d2ff;
+$text-white:   #ffffff;
+$glass-bg:     rgba(49, 39, 131, 0.85);
+$transition:   all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Banniere  : 100px desktop / 75px tablette(768) / 65px mobile(480)
+// Navbar    : 80px  desktop / 72px tablette      / 65px mobile
+// Total     : 180px desktop / 147px tablette     / 130px mobile
 
 .navbar {
   position: fixed;
-  top: 0;
+  top: 100px;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: 80px;
   z-index: 2000;
-  transition: $transition-smooth;
+  transition: $transition;
   display: flex;
   align-items: center;
   background: transparent;
 
   &.scrolled {
-    height: 80px;
     background: $glass-bg;
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -34,6 +36,8 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (min-width: 1600px) { max-width: 1600px; }
   }
 
   .logo-area {
@@ -44,27 +48,30 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 2101;
 
     .main-logo {
-      height: 60px;
+      height: 52px;
       width: auto;
-      transition: $transition-smooth;
+      transition: $transition;
     }
 
     .logo-text {
       color: $text-white;
+
       .brand-name {
         display: block;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 900;
         letter-spacing: 2px;
         background: linear-gradient(to right, #fff, $accent-cyan);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
       .brand-sub {
-        font-size: 0.7rem;
+        font-size: 0.68rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         opacity: 0.8;
+        color: $text-white;
       }
     }
   }
@@ -72,31 +79,25 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   .nav-content-desktop {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 32px;
 
-    @media (max-width: 1100px) {
-      display: none; // Cache le menu complet sur tablette/mobile
-    }
+    @media (max-width: 1100px) { display: none; }
   }
 
   .nav-menu {
     display: flex;
-    gap: 35px;
+    gap: 28px;
     list-style: none;
 
     .nav-item a {
       color: $text-white;
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
-      padding-bottom: 5px;
-      transition: opacity 0.3s;
-
-      &:hover, &.active {
-        color: $accent-cyan;
-        &::after { width: 100%; }
-      }
+      padding-bottom: 4px;
+      transition: color 0.3s;
+      position: relative;
 
       &::after {
         content: '';
@@ -105,6 +106,15 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         height: 2px;
         background: $accent-cyan;
         transition: width 0.3s ease;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      &:hover,
+      &.active {
+        color: $accent-cyan;
+        &::after { width: 100%; }
       }
     }
   }
@@ -113,20 +123,23 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     background: $accent-cyan;
     color: $primary-blue;
     border: none;
-    padding: 12px 26px;
+    padding: 11px 22px;
     border-radius: 12px;
     font-weight: 700;
     cursor: pointer;
     text-transform: uppercase;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: $transition;
+
+    &:hover { opacity: 0.9; transform: translateY(-2px); }
   }
 
-  // Hamburger moderne
   .hamburger {
     display: none;
     flex-direction: column;
-    gap: 7px;
+    gap: 6px;
     cursor: pointer;
     padding: 10px;
     z-index: 2101;
@@ -134,7 +147,7 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     @media (max-width: 1100px) { display: flex; }
 
     span {
-      width: 30px;
+      width: 28px;
       height: 2px;
       background: $text-white;
       transition: 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
@@ -142,20 +155,38 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &.open span {
-      &:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+      &:nth-child(1) { transform: translateY(8px) rotate(45deg); }
       &:nth-child(2) { opacity: 0; transform: translateX(20px); }
-      &:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+      &:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
     }
+  }
+
+  @media (max-width: 1100px) and (min-width: 769px) {
+    top: 100px;
+    height: 72px;
+  }
+
+  @media (max-width: 768px) {
+    top: 75px;
+    height: 65px;
+
+    .logo-area {
+      .main-logo  { height: 40px; }
+      .brand-name { font-size: 1.2rem; }
+      .brand-sub  { display: none; }
+    }
+  }
+
+  @media (max-width: 480px) {
+    top: 65px;
+    height: 60px;
   }
 }
 
-// Menu Mobile Drawer
+// Mobile Drawer
 .menu-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
+  inset: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
   z-index: 2040;
@@ -169,51 +200,45 @@ $transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100vh;
   background: color.adjust($primary-blue, $lightness: -5%);
   z-index: 2050;
-  padding: 120px 40px 40px;
-  box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+  padding: 200px 40px 40px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+
+  @media (max-width: 768px) { padding-top: 160px; }
+  @media (max-width: 480px) { width: 100%; padding-top: 145px; }
 
   .mobile-nav-links {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 28px;
 
     li a {
       color: white;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 600;
       text-decoration: none;
       display: block;
       transition: color 0.3s;
 
-      &:active { color: $accent-cyan; }
+      &:hover,
+      &.active { color: $accent-cyan; }
     }
 
     .mobile-btn-container {
-      margin-top: 20px;
+      margin-top: 16px;
+
       .btn-membership-mobile {
         display: block;
         background: $accent-cyan;
         color: $primary-blue;
         text-align: center;
-        padding: 15px;
+        padding: 14px;
         border-radius: 12px;
         font-weight: 800;
+        text-decoration: none;
+        font-size: 0.95rem;
       }
     }
   }
-}
-
-// Adaptations spécifiques tablettes et petits mobiles
-@media (max-width: 768px) {
-  .navbar {
-    height: 80px;
-    &.scrolled { height: 70px; }
-    .logo-area {
-      .main-logo { height: 45px; }
-      .brand-name { font-size: 1.3rem; }
-      .brand-sub { display: none; }
-    }
-  }
-  .mobile-drawer { width: 100%; } // Full screen sur mobile pour plus de clarté
 }

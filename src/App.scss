@@ -95,6 +95,7 @@ h1, h2, h3 {
 // 5. COMPOSANTS RÉUTILISABLES
 .section-padding {
   padding: 100px 10%;
+  @media (min-width: 1600px) { padding: 120px 12%; }
   @include mobile { padding: 60px 5%; }
 }
 

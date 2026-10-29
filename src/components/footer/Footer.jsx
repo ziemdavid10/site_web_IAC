@@ -1,17 +1,18 @@
 import { motion } from 'framer-motion';
+import { NavLink } from 'react-router-dom';
 import { FaFacebook, FaLinkedin, FaYoutube, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGlobe } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import './Footer.scss';
 
 const navLinks = [
-  { label: 'Accueil', to: 'home' },
-  { label: 'Notre Vision', to: 'about' },
-  { label: 'Formations', to: 'services' },
-  { label: 'Écosystème IA', to: 'ecosystem' },
-  { label: 'Agenda', to: 'agenda' },
-  { label: 'Actualités', to: 'news' },
-  { label: 'Carrières', to: 'careers' },
-  { label: 'Partenaires', to: 'partners' },
+  { label: 'Accueil', to: '/' },
+  { label: 'Notre Vision', to: '/presentation' },
+  { label: 'Formations', to: '/services' },
+  { label: 'Écosystème IA', to: '/ecosysteme' },
+  { label: 'Actualités', to: '/actualites' },
+  { label: 'Carrières', to: '/carrieres' },
+  { label: 'Membres', to: '/membres' },
+  { label: 'JCIA', to: '/jcia' },
 ];
 
 const Footer = () => {
@@ -44,7 +45,7 @@ const Footer = () => {
           <h4>Navigation</h4>
           <ul>
             {navLinks.map((l, i) => (
-              <li key={i}><a href={`#${l.to}`}>{l.label}</a></li>
+              <li key={i}><NavLink to={l.to}>{l.label}</NavLink></li>
             ))}
           </ul>
         </div>

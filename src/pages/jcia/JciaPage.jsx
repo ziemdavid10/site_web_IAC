@@ -205,7 +205,7 @@ const JciaPage = ({ onBack }) => {
         </motion.div>
       </section>
 
-      {/* ── CHIFFRES CLÉS ── */}}
+      {/* ── CHIFFRES CLÉS ── */}
       <section className="jcia-stats">
         <motion.div className="jcia-section-header" variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <span className="jcia-tag"><span className="material-symbols-rounded">analytics</span> Chiffres Clés</span>

@@ -1,16 +1,60 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-scroll';
+import { useNavigate } from 'react-router-dom';
 import ImageSlider from './ImageSlider';
 import './Hero.scss';
 
 const stats = [
-  { value: '500K+', label: 'Téléchargements Dastudy' },
-  { value: '15', label: 'Pays couverts' },
-  { value: '3', label: 'Ans d\'existence' },
-  { value: '50+', label: 'Partenaires actifs' },
+  { end: 500, suffix: 'K+', label: 'Téléchargements Dastudy' },
+  { end: 15,  suffix: '',   label: 'Pays couverts' },
+  { end: 3,   suffix: '',   label: "Ans d'existence" },
+  { end: 50,  suffix: '+',  label: 'Partenaires actifs' },
 ];
 
-const Hero = () => (
+const useCountUp = (end, duration = 2000) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true;
+        const startTime = performance.now();
+        const step = (now) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          setCount(Math.floor(progress * end));
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+    });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return { count, ref };
+};
+
+const StatItem = ({ end, suffix, label, delay }) => {
+  const { count, ref } = useCountUp(end);
+  return (
+    <motion.div
+      ref={ref}
+      className="hero__stat"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay }}
+    >
+      <strong>{count}{suffix}</strong>
+      <span>{label}</span>
+    </motion.div>
+  );
+};
+
+const Hero = () => {
+  const navigate = useNavigate();
+  return (
   <section className="hero" id="home">
     <ImageSlider />
 
@@ -47,53 +91,27 @@ const Hero = () => (
       </p>
 
       <div className="hero-btns">
-        <Link to="services" smooth duration={600}>
           <motion.button
             className="btn-primary"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
+            onClick={() => navigate('/services')}
           >
             Nos Formations
           </motion.button>
-        </Link>
-        <Link to="about" smooth duration={600}>
           <motion.button
             className="btn-outline"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
+            onClick={() => navigate('/presentation')}
           >
             Découvrir l'IAC
           </motion.button>
-        </Link>
-      </div>
-
-      <div className="hero__jcia-cta">
-        <motion.button
-          className="btn-jcia"
-          onClick={() => window.dispatchEvent(new CustomEvent('openJcia'))}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-        >
-          <span className="material-symbols-rounded">smart_display</span>
-          Parlons JCIA
-        </motion.button>
       </div>
 
       <div className="hero__stats">
         {stats.map((s, i) => (
-          <motion.div
-            key={i}
-            className="hero__stat"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 + i * 0.1 }}
-          >
-            <strong>{s.value}</strong>
-            <span>{s.label}</span>
-          </motion.div>
+          <StatItem key={i} end={s.end} suffix={s.suffix} label={s.label} delay={0.6 + i * 0.1} />
         ))}
       </div>
     </motion.div>
@@ -118,6 +136,7 @@ const Hero = () => (
       </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 export default Hero;

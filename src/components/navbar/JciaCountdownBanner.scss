@@ -1,0 +1,147 @@
+.jcia-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 2100;
+  background: linear-gradient(135deg, #0d0a3e 0%, #312783 50%, #0891b2 100%);
+  border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+
+  @media (max-width: 768px) { height: 75px; }
+  @media (max-width: 480px) { height: 65px; }
+
+  &__inner {
+    width: 92%;
+    max-width: 1440px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    @media (min-width: 1600px) { max-width: 1600px; }
+  }
+
+  &__text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+
+    strong { color: #00d2ff; font-weight: 800; white-space: nowrap; }
+
+    span:last-child {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-size: 1.1rem;
+      color: #00d2ff;
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) { font-size: 0.75rem; }
+    @media (max-width: 768px) { font-size: 0.68rem; }
+    @media (max-width: 480px) { font-size: 0.6rem; }
+  }
+
+  &__countdown {
+    flex-shrink: 0;
+
+    // ── Desktop ──────────────────────────────────────────────
+    .countdown {
+      padding: 6px 18px;
+      gap: 5px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      width: auto;
+
+      &__label {
+        font-size: 0.55rem;
+        letter-spacing: 1.5px;
+        gap: 4px;
+        .material-symbols-rounded { font-size: 0.85rem; }
+      }
+
+      &__units { gap: 0; }
+
+      &__unit {
+        padding: 0 10px;
+
+        strong { font-size: 1.35rem; letter-spacing: -0.5px; }
+        span   { font-size: 0.48rem; margin-top: 2px; }
+
+        &:not(:last-child)::after {
+          font-size: 1.1rem;
+          top: 2px;
+          right: -3px;
+        }
+      }
+    }
+
+    // ── Tablette ─────────────────────────────────────────────
+    @media (max-width: 768px) {
+      .countdown {
+        padding: 5px 12px;
+        gap: 4px;
+
+        &__label { font-size: 0.48rem; letter-spacing: 1px; }
+
+        &__unit {
+          padding: 0 7px;
+          strong { font-size: 1.05rem; }
+          span   { font-size: 0.42rem; }
+          &:not(:last-child)::after { font-size: 0.9rem; top: 1px; }
+        }
+      }
+    }
+
+    // ── Mobile ───────────────────────────────────────────────
+    @media (max-width: 480px) {
+      .countdown {
+        padding: 4px 8px;
+        gap: 3px;
+
+        &__label { font-size: 0.42rem; letter-spacing: 0.8px; }
+
+        &__unit {
+          padding: 0 5px;
+          strong { font-size: 0.88rem; }
+          span   { font-size: 0.38rem; }
+          &:not(:last-child)::after { font-size: 0.75rem; top: 1px; }
+        }
+      }
+    }
+  }
+
+  &__cta {
+    background: #00d2ff;
+    color: #312783;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) { padding: 6px 12px; font-size: 0.68rem; }
+    @media (max-width: 480px) { padding: 5px 8px;  font-size: 0.6rem;  }
+  }
+}

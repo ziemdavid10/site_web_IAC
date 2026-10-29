@@ -1,6 +1,41 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import './Partners.scss';
+
+const useCountUp = (end, duration = 2000) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true;
+        const startTime = performance.now();
+        const step = (now) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          setCount(Math.floor(progress * end));
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+    });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return { count, ref };
+};
+
+const StatItem = ({ end, suffix, label }) => {
+  const { count, ref } = useCountUp(end);
+  return (
+    <div className="partners-stats__item" ref={ref}>
+      <strong>{count}{suffix}</strong>
+      <span>{label}</span>
+    </div>
+  );
+};
 
 const partners = [
   {
@@ -107,10 +142,10 @@ const categoryColors = {
 };
 
 const stats = [
-  { value: '12+', label: 'Partenaires avec logo' },
-  { value: '6', label: 'Catégories' },
-  { value: '4', label: 'Continents' },
-  { value: '2022', label: 'Depuis' },
+  { end: 12,   suffix: '+',  label: 'Partenaires avec logo' },
+  { end: 6,    suffix: '',   label: 'Catégories' },
+  { end: 4,    suffix: '',   label: 'Continents' },
+  { end: 2022, suffix: '',   label: 'Depuis' },
 ];
 
 const Partners = () => {
@@ -143,10 +178,7 @@ const Partners = () => {
         transition={{ delay: 0.2 }}
       >
         {stats.map((s, i) => (
-          <div className="partners-stats__item" key={i}>
-            <strong>{s.value}</strong>
-            <span>{s.label}</span>
-          </div>
+          <StatItem key={i} end={s.end} suffix={s.suffix} label={s.label} />
         ))}
       </motion.div>
 

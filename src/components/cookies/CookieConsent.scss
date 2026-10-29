@@ -1,0 +1,294 @@
+@use '../../App.scss' as *;
+@use 'sass:color';
+
+.cookie-consent {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(760px, calc(100vw - 32px));
+  z-index: 9998;
+
+  &__inner {
+    background: white;
+    border-radius: 24px;
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.18),
+      0 0 0 1px rgba($primary-color, 0.08);
+    overflow: hidden;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid rgba($primary-color, 0.07);
+  }
+
+  &__title {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 1.8rem;
+      color: $primary-color;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: $primary-color;
+      margin-bottom: 4px;
+      &:hover { background: none; -webkit-text-fill-color: $primary-color; }
+    }
+
+    p {
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.5;
+      margin: 0;
+
+      a {
+        color: $primary-color;
+        font-weight: 600;
+        text-decoration: underline;
+        &:hover { color: $accent-color; }
+      }
+    }
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    padding: 4px;
+    border-radius: 8px;
+    transition: $transition;
+    flex-shrink: 0;
+
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 1.2rem;
+      display: block;
+    }
+
+    &:hover { background: $bg-light; color: $primary-color; }
+  }
+
+  &__details {
+    overflow: hidden;
+    padding: 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 28px 20px;
+    flex-wrap: wrap;
+
+    @media (max-width: 560px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  &__btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    @media (max-width: 560px) { flex-direction: column; }
+  }
+}
+
+// ── CATÉGORIES ───────────────────────────────────────────────
+.cookie-cat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba($primary-color, 0.06);
+
+  &:last-child { border-bottom: none; }
+
+  &__info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 1.2rem;
+      color: $accent-color;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: $primary-color;
+      margin-bottom: 2px;
+    }
+
+    p {
+      font-size: 0.78rem;
+      color: #888;
+      line-height: 1.4;
+      margin: 0;
+    }
+  }
+}
+
+// ── TOGGLE ───────────────────────────────────────────────────
+.cookie-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+  padding: 0;
+
+  &.on { background: $primary-color; }
+  &.off { background: #ddd; }
+
+  &.disabled {
+    background: color.adjust($primary-color, $lightness: 20%);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  &__thumb {
+    position: absolute;
+    top: 3px;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: left 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  &.on &__thumb { left: 23px; }
+  &.off &__thumb { left: 3px; }
+}
+
+// ── BOUTONS ──────────────────────────────────────────────────
+.btn-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: $bg-light;
+  border: 1.5px solid rgba($primary-color, 0.15);
+  border-radius: 50px;
+  color: $primary-color;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+  white-space: nowrap;
+
+  .material-symbols-rounded {
+    font-family: 'Material Symbols Rounded';
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    font-size: 1rem;
+  }
+
+  &:hover { background: white; border-color: $primary-color; }
+}
+
+.btn-reject {
+  padding: 9px 18px;
+  background: transparent;
+  border: 1.5px solid rgba($primary-color, 0.2);
+  border-radius: 50px;
+  color: #666;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $transition;
+  white-space: nowrap;
+
+  &:hover { border-color: #999; color: #333; }
+}
+
+.btn-save {
+  padding: 9px 18px;
+  background: $bg-light;
+  border: 1.5px solid $primary-color;
+  border-radius: 50px;
+  color: $primary-color;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition;
+  white-space: nowrap;
+
+  &:hover { background: rgba($primary-color, 0.06); }
+}
+
+.btn-accept {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  background: $primary-color;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition;
+  white-space: nowrap;
+
+  .material-symbols-rounded {
+    font-family: 'Material Symbols Rounded';
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background: color.adjust($primary-color, $lightness: 8%);
+    box-shadow: 0 6px 20px rgba($primary-color, 0.35);
+    transform: translateY(-1px);
+  }
+}
+
+// ── RESPONSIVE ───────────────────────────────────────────────
+@media (max-width: 600px) {
+  .cookie-consent {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+
+    &__inner { border-radius: 20px 20px 0 0; }
+    &__header { padding: 20px 20px 16px; }
+    &__details { padding: 0 20px; }
+    &__actions { padding: 14px 20px 24px; }
+  }
+}

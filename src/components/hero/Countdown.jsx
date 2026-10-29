@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import './Countdown.scss';
 
 const TARGET = new Date('2027-04-20T08:00:00');
-
 const pad = (n) => String(n).padStart(2, '0');
 
 const Countdown = () => {
@@ -25,10 +24,10 @@ const Countdown = () => {
   }, []);
 
   const units = [
-    { label: 'Jours', value: timeLeft.days },
+    { label: 'Jours',  value: timeLeft.days },
     { label: 'Heures', value: pad(timeLeft.hours) },
-    { label: 'Min', value: pad(timeLeft.minutes) },
-    { label: 'Sec', value: pad(timeLeft.seconds) },
+    { label: 'Min',    value: pad(timeLeft.minutes) },
+    { label: 'Sec',    value: pad(timeLeft.seconds) },
   ];
 
   return (

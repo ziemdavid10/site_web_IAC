@@ -7,6 +7,8 @@
   position: relative;
   overflow: hidden;
 
+  @media (min-width: 1600px) { padding: 120px 12%; }
+
   &::before {
     content: '';
     position: absolute;
@@ -25,6 +27,7 @@
     margin: 0 auto;
     align-items: start;
 
+    @media (min-width: 1600px) { max-width: 1600px; gap: 100px; }
     @include mobile { grid-template-columns: 1fr; gap: 50px; }
   }
 
